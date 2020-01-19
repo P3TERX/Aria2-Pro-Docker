@@ -1,0 +1,38 @@
+#!/usr/bin/with-contenv bash
+#=================================================
+#     _         _       ____    ____
+#    / \   _ __(_) __ _|___ \  |  _ \ _ __ ___
+#   / _ \ | '__| |/ _` | __) | | |_) | '__/ _ \
+#  / ___ \| |  | | (_| |/ __/  |  __/| | | (_) |
+# /_/   \_\_|  |_|\__,_|_____| |_|   |_|  \___/
+#
+# https://github.com/P3TERX/docker-aria2-pro
+# Description: A perfect Aria2 Docker image
+# Lisence: MIT
+# Author: P3TERX
+# Blog: https://p3terx.com (chinese)
+#=================================================
+Green_font_prefix="\033[32m"
+Red_font_prefix="\033[31m"
+Green_background_prefix="\033[42;37m"
+Red_background_prefix="\033[41;37m"
+Font_color_suffix="\033[0m"
+INFO="[${Green_font_prefix}INFO${Font_color_suffix}]"
+ERROR="[${Red_font_prefix}ERROR${Font_color_suffix}]"
+
+if [ "$RCLONE" = "enable" ]; then
+    echo -e "${INFO} Installation RCLONE ..."
+    apk add -q --no-cache unzip
+    curl -fsSL https://rclone.org/install.sh | bash
+    [ ! -e /config/rclone/rclone.conf ] && {
+        mkdir -p /config/rclone
+        touch /config/rclone/rclone.conf
+    }
+    while [ ! -e /config/autoupload.sh ]; do
+        echo -e "${INFO} Doanload 'autoupload.sh' ..."
+        curl -fsSL https://raw.githubusercontent.com/P3TERX/aria2.conf/master/autoupload.sh -o /config/autoupload.sh
+        [ ! -e /config/autoupload.sh ] \
+            && echo -e "${ERROR} 'autoupload.sh' doanload error, retry ..."
+        sleep 5
+    done
+fi

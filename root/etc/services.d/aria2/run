@@ -1,0 +1,33 @@
+#!/usr/bin/with-contenv bash
+#=================================================
+#     _         _       ____    ____
+#    / \   _ __(_) __ _|___ \  |  _ \ _ __ ___
+#   / _ \ | '__| |/ _` | __) | | |_) | '__/ _ \
+#  / ___ \| |  | | (_| |/ __/  |  __/| | | (_) |
+# /_/   \_\_|  |_|\__,_|_____| |_|   |_|  \___/
+#
+# https://github.com/P3TERX/docker-aria2-pro
+# Description: A perfect Aria2 Docker image
+# Lisence: MIT
+# Author: P3TERX
+# Blog: https://p3terx.com (chinese)
+#=================================================
+[ -n "$RPC_SECRET" ] \
+    && SET_RPC_SECRET="--rpc-secret='$RPC_SECRET'"
+
+[ "$RCLONE" = "enable" ] \
+    && DOWNLOAD_COMPLETE='/config/autoupload.sh'
+
+exec s6-setuidgid p3terx aria2c \
+    --conf-path=/config/aria2.conf \
+    $SET_RPC_SECRET \
+    --dir=/downloads \
+    --rpc-listen-port=6800 \
+    --listen-port=6888 \
+    --dht-listen-port=6888 \
+    --input-file=/config/aria2.session \
+    --save-session=/config/aria2.session \
+    --dht-file-path=/config/dht.dat \
+    --dht-file-path6=/config/dht6.dat \
+    --on-download-stop=/config/delete.sh \
+    --on-download-complete=${DOWNLOAD_COMPLETE:-'/config/delete.aria2.sh'}
