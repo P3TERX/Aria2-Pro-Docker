@@ -1,11 +1,11 @@
 # Aria2 Pro
 
 [![LICENSE](https://img.shields.io/github/license/P3TERX/docker-aria2-pro?style=flat-square&label=LICENSE)](https://github.com/P3TERX/docker-aria2-pro/blob/master/LICENSE)
-[![GitHub Stars](https://img.shields.io/github/stars/P3TERX/docker-aria2-pro.svg?style=flat-square&label=Stars)](https://github.com/P3TERX/docker-aria2-pro/stargazers)
-[![GitHub forks](https://img.shields.io/github/forks/P3TERX/docker-aria2-pro.svg?style=flat-square&label=Forks)](https://github.com/P3TERX/docker-aria2-pro/fork)
-
-[![Docker Pulls](https://img.shields.io/docker/pulls/p3terx/aria2-pro.svg?style=flat-square&label=Docker%20Pulls&color=orange)](https://hub.docker.com/r/p3terx/aria2-pro)
-[![Docker Stars](https://img.shields.io/docker/stars/p3terx/aria2-pro.svg?style=flat-square&label=Docker%20Stars)](https://hub.docker.com/r/p3terx/aria2-pro)
+[![GitHub Stars](https://img.shields.io/github/stars/P3TERX/docker-aria2-pro.svg?style=flat-square&label=Stars&logo=github)](https://github.com/P3TERX/docker-aria2-pro/stargazers)
+[![GitHub forks](https://img.shields.io/github/forks/P3TERX/docker-aria2-pro.svg?style=flat-square&label=Forks&logo=github)](https://github.com/P3TERX/docker-aria2-pro/fork)
+[![Docker Stars](https://img.shields.io/docker/stars/p3terx/aria2-pro.svg?style=flat-square&label=Stars&logo=docker)](https://hub.docker.com/r/p3terx/aria2-pro)
+[![Docker Pulls](https://img.shields.io/docker/pulls/p3terx/aria2-pro.svg?style=flat-square&label=Pulls&logo=docker&color=orange)](https://hub.docker.com/r/p3terx/aria2-pro)
+![GitHub Workflow Status](https://img.shields.io/github/workflow/status/P3TERX/docker-aria2-pro/Docker%20images%20build%20test?label=Actions&logo=github&style=flat-square)
 
 A perfect Aria2 Docker image.
 
