@@ -1,0 +1,68 @@
+#=================================================
+#     _         _       ____    ____
+#    / \   _ __(_) __ _|___ \  |  _ \ _ __ ___
+#   / _ \ | '__| |/ _` | __) | | |_) | '__/ _ \
+#  / ___ \| |  | | (_| |/ __/  |  __/| | | (_) |
+# /_/   \_\_|  |_|\__,_|_____| |_|   |_|  \___/
+#
+# https://github.com/P3TERX/docker-aria2-pro
+# Description: A perfect Aria2 Docker image
+# Lisence: MIT
+# Author: P3TERX
+# Blog: https://p3terx.com (chinese)
+#=================================================
+name: Docker images publish
+
+on: 
+  release:
+    types: [published]
+  schedule:
+    - cron: 10 8 * * 5
+
+jobs:
+  publish:
+    name: Publish
+    runs-on: ubuntu-latest
+
+    steps:
+    - name: Checkout
+      uses: actions/checkout@v2
+
+    - name: Install buildx
+      run: |
+        curl -s https://api.github.com/repos/docker/buildx/releases/latest \
+        | grep "browser_download_url.*buildx-*.*linux-amd64" \
+        | cut -d : -f 2,3 \
+        | tr -d \" \
+        | wget -qi -
+        mkdir -p ~/.docker/cli-plugins/
+        mv buildx* ~/.docker/cli-plugins/docker-buildx
+        chmod +x ~/.docker/cli-plugins/docker-buildx
+
+    - name: Set up buildx
+      run: |
+        docker run --rm --privileged docker/binfmt:66f9012c56a8316f9244ffd7622d7c21c1f6f28d
+        docker run --rm --privileged multiarch/qemu-user-static --reset -p yes
+        docker buildx create --use --name multi-arch-builder
+
+    - name: Available platforms
+      run: |
+        docker buildx inspect --bootstrap | grep Platforms
+
+    - name: Login to Docker Hub
+      run: |
+        docker login -u ${{ secrets.DOCKER_USERNAME }} -p ${{ secrets.DOCKER_PASSWORD }}
+
+    - name: Build and push
+      env:
+        PLATFORMS: linux/amd64,linux/386,linux/arm64,linux/arm/v7
+        IMAGE_NAME: p3terx/aria2-pro
+        IMAGE_TAG: latest
+        DOCKERFILE: Dockerfile
+        FILE_PATH: .
+      run: |
+        docker buildx build --push \
+          --platform ${PLATFORMS} \
+          -t ${IMAGE_NAME}:${IMAGE_TAG} \
+          -f ${DOCKERFILE} \
+          ${FILE_PATH}
