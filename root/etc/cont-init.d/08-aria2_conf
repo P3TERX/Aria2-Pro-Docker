@@ -34,7 +34,7 @@ while [ ! -e delete.aria2.sh ]; do
     echo -e "${INFO} Doanload 'delete.aria2.sh' ..."
     curl -fsSLO https://raw.githubusercontent.com/P3TERX/aria2.conf/master/delete.aria2.sh
     [ ! -e delete.aria2.sh ] \
-        && echo -e "${ERROR} 'aria2.conf' doanload error, retry ..."
+        && echo -e "${ERROR} 'delete.aria2.sh' doanload error, retry ..."
     sleep 5
 done
 
@@ -42,7 +42,7 @@ while [ ! -e delete.sh ]; do
     echo -e "${INFO} Doanload 'delete.sh' ..."
     curl -fsSLO https://raw.githubusercontent.com/P3TERX/aria2.conf/master/delete.sh
     [ ! -e delete.sh ] \
-        && echo -e "${ERROR} 'aria2.conf' doanload error, retry ..."
+        && echo -e "${ERROR} 'delete.sh' doanload error, retry ..."
     sleep 5
 done
 
@@ -50,7 +50,7 @@ while [ ! -e dht.dat ]; do
     echo -e "${INFO} Doanload 'dht.dat' ..."
     curl -fsSLO https://raw.githubusercontent.com/P3TERX/aria2.conf/master/dht.dat
     [ ! -e dht.dat ] \
-        && echo -e "${ERROR} 'aria2.conf' doanload error, retry ..."
+        && echo -e "${ERROR} 'dht.dat' doanload error, retry ..."
     sleep 5
 done
 
@@ -58,7 +58,7 @@ while [ ! -e dht6.dat ]; do
     echo -e "${INFO} Doanload 'dht6.dat' ..."
     curl -fsSLO https://raw.githubusercontent.com/P3TERX/aria2.conf/master/dht6.dat
     [ ! -e dht6.dat ] \
-        && echo -e "${ERROR} 'aria2.conf' doanload error, retry ..."
+        && echo -e "${ERROR} 'dht6.dat' doanload error, retry ..."
     sleep 5
 done
 
