@@ -13,7 +13,7 @@
 # Blog: https://p3terx.com (chinese)
 #=================================================
 [ -n "$RPC_SECRET" ] \
-    && SET_RPC_SECRET="--rpc-secret='$RPC_SECRET'"
+    && SET_RPC_SECRET="--rpc-secret=$RPC_SECRET"
 
 [ "$RCLONE" = "enable" ] \
     && DOWNLOAD_COMPLETE='/config/autoupload.sh'
