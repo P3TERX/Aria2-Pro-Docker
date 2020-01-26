@@ -23,7 +23,7 @@ A perfect Aria2 Docker image.
 
 ## Usage
 
-- No matter what architecture platform is used, just use the following command to start the container ( Just need to replace the `P3TERX` field ):
+- No matter what architecture platform is used, just use the following command to start the container ( Just need to replace the `<TOKEN>` field ):
 ```
 docker run -d \
     --name aria2-pro \
@@ -31,7 +31,7 @@ docker run -d \
     --log-opt max-size=1m \
     -e PUID=$UID \
     -e PGID=$GID \
-    -e RPC_SECRET=P3TERX \
+    -e RPC_SECRET=<TOKEN> \
     -p 6800:6800 \
     -p 6888:6888 \
     -p 6888:6888/udp \
@@ -49,14 +49,15 @@ docker run -d \
 | Parameter | Function |
 | --- | --- |
 | `-e PUID=$UID`<br>`-e PGID=$GID` | Bind UID and GID to the container, which means you can use a non-root user to manage downloaded files. |
-| `-e RPC_SECRET=P3TERX` | Set RPC secret authorization token. |
-| `-e TZ=Asia/Shanghai` | Specify a timezone to use `Asia/Shanghai` |
+| `-e RPC_SECRET=<TOKEN>` | Set RPC secret authorization token. Ignoring it can be set in the configuration file. |
+| `-e TZ=Asia/Shanghai` | Specify a timezone to use e.g. `Asia/Shanghai` |
 | `-p 6800:6800` | RPC listen port |
 | `-p 6888:6888` | BT listen port (TCP)|
 | `-p 6888:6888/udp` | DHT lisen port (UDP) |
 | `-v ~/aria2-config:/config` | Contains all relevant configuration files. |
 | `-v ~/downloads:/downloads` | Location of downloads on disk. |
 | `-e TRACKERS=no` | Disable BT tracker update, use this parameter if you need PT download. |
+| `-e DISK_CACHE=<SIZE>` | Set up disk cache. SIZE can include `K` or `M` (1K = 1024, 1M = 1024K), e.g `64M`. Ignoring it can be set in the configuration file. |
 
 ## Advanced
 
