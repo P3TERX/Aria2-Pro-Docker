@@ -15,12 +15,16 @@
 [ -n "$RPC_SECRET" ] \
     && SET_RPC_SECRET="--rpc-secret=$RPC_SECRET"
 
+[ -n "$DISK_CACHE" ] \
+    && SET_DISK_CACHE="--disk-cache=$DISK_CACHE"
+
 [ "$RCLONE" = "enable" ] \
     && DOWNLOAD_COMPLETE='/config/autoupload.sh'
 
 exec s6-setuidgid p3terx aria2c \
     --conf-path=/config/aria2.conf \
     $SET_RPC_SECRET \
+    $SET_DISK_CACHE \
     --dir=/downloads \
     --rpc-listen-port=6800 \
     --listen-port=6888 \
