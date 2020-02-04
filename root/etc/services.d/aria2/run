@@ -21,6 +21,8 @@
 [ "$RCLONE" = "enable" ] \
     && DOWNLOAD_COMPLETE='/config/autoupload.sh'
 
+trap '' TERM
+
 exec s6-setuidgid p3terx aria2c \
     --conf-path=/config/aria2.conf \
     $SET_RPC_SECRET \
