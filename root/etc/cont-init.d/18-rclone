@@ -25,9 +25,9 @@ if [ "$RCLONE" = "enable" ]; then
     apk add -q --no-cache unzip
     curl -fsSL https://rclone.org/install.sh | bash
     cd /config
-    [ ! -e rclone/rclone.conf ] && {
-        mkdir -p rclone
-        touch rclone/rclone.conf
+    [ ! -e rclone/rclone.conf ] || {
+        mv rclone/rclone.conf .
+        rm -rf rclone
     }
     while [ ! -e autoupload.sh ]; do
         echo; echo -e "${INFO} Doanload 'autoupload.sh' ..."

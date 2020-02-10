@@ -15,8 +15,8 @@ FROM p3terx/s6-alpine:latest
 
 LABEL maintainer P3TERX
 
-ENV XDG_CONFIG_HOME=/config \
-    S6_BEHAVIOUR_IF_STAGE2_FAILS=1
+ENV S6_BEHAVIOUR_IF_STAGE2_FAILS=1 \
+    RCLONE_CONFIG=/config/rclone.conf
 
 RUN apk add --no-cache findutils ca-certificates dpkg && \
     curl -fsSL git.io/aria2c.sh | bash && \
@@ -26,6 +26,7 @@ RUN apk add --no-cache findutils ca-certificates dpkg && \
 
 COPY root /
 
-EXPOSE 6800 \
+EXPOSE \
+    6800 \
     6888 \
     6888/udp
