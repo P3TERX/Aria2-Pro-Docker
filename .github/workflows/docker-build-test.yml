@@ -58,7 +58,7 @@ jobs:
 
     - name: Build test
       env:
-        PLATFORMS: linux/amd64,linux/386,linux/arm64,linux/arm/v7
+        PLATFORMS: linux/amd64,linux/386,linux/arm64,linux/arm/v7,linux/arm/v6
         IMAGE_NAME: p3terx/aria2-pro
         IMAGE_TAG: test
         DOCKERFILE: Dockerfile

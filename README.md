@@ -13,7 +13,7 @@ A perfect Aria2 Docker image.
 
 ## Features
 
-* Multi-architecture: `amd64`, `i386`, `arm64`, `armhf`
+* Supported platforms: `amd64`, `i386`, `arm64`, `arm/v7`, `arm/v6`
 * Full Function: `Async DNS`, `BitTorrent`, `Firefox3 Cookie`, `GZip`, `HTTPS`, `Message Digest`, `Metalink`, `XML-RPC`, `SFTP`
 * High BT download rate and speed.
 * Get BitTorrent tracker automatically.
