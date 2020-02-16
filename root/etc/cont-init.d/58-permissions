@@ -12,7 +12,8 @@
 # Author: P3TERX
 # Blog: https://p3terx.com (chinese)
 #=================================================
-sed -i "/downloadpath=/c\downloadpath='/downloads'" /config/*.sh
+sed -i "/^downloadpath='/c\downloadpath='/downloads'" /config/*.sh
+sed -i "/^DOWNLOAD_PATH='/c\DOWNLOAD_PATH='/downloads'" /config/*.sh
 chown -R p3terx:p3terx /config
 chown -R p3terx:p3terx /downloads
 chmod +x /config/*.sh
