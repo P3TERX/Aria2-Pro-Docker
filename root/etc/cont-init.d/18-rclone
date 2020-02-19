@@ -32,7 +32,8 @@ if [ "$RCLONE" = "enable" ]; then
     while [ ! -e autoupload.sh ]; do
         echo; echo -e "${INFO} Doanload 'autoupload.sh' ..."
         curl -fsSLO https://raw.githubusercontent.com/P3TERX/aria2.conf/master/autoupload.sh || \
-        curl -fsSLO https://cdn.jsdelivr.net/gh/P3TERX/aria2.conf/autoupload.sh
+        curl -fsSLO https://cdn.jsdelivr.net/gh/P3TERX/aria2.conf/autoupload.sh || \
+        curl -fsSLO https://gh.p3terx.workers.dev/aria2.conf/master/autoupload.sh
         [ -e autoupload.sh ] || {
             echo; echo -e "${ERROR} 'autoupload.sh' doanload error, retry ..."
             sleep 5
