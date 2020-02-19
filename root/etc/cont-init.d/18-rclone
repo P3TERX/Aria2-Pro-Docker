@@ -20,22 +20,25 @@ Font_color_suffix="\033[0m"
 INFO="[${Green_font_prefix}INFO${Font_color_suffix}]"
 ERROR="[${Red_font_prefix}ERROR${Font_color_suffix}]"
 
-if [ "$RCLONE" = "enable" ]; then
-    echo; echo -e "${INFO} Installation RCLONE ..."
+if [[ "$RCLONE" = "enable" ]]; then
+    echo
+    echo -e "${INFO} Installation RCLONE ..."
     apk add -q --no-cache unzip
     curl -fsSL https://rclone.org/install.sh | bash
     cd /config
-    [ ! -e rclone/rclone.conf ] || {
+    [[ ! -e rclone/rclone.conf ]] || {
         mv rclone/rclone.conf .
         rm -rf rclone
     }
-    while [ ! -e autoupload.sh ]; do
-        echo; echo -e "${INFO} Doanload 'autoupload.sh' ..."
-        curl -fsSLO https://raw.githubusercontent.com/P3TERX/aria2.conf/master/autoupload.sh || \
-        curl -fsSLO https://cdn.jsdelivr.net/gh/P3TERX/aria2.conf/autoupload.sh || \
-        curl -fsSLO https://gh.p3terx.workers.dev/aria2.conf/master/autoupload.sh
-        [ -e autoupload.sh ] || {
-            echo; echo -e "${ERROR} 'autoupload.sh' doanload error, retry ..."
+    while [[ ! -e autoupload.sh ]]; do
+        echo
+        echo -e "${INFO} Doanload 'autoupload.sh' ..."
+        curl -fsSLO https://raw.githubusercontent.com/P3TERX/aria2.conf/master/autoupload.sh ||
+            curl -fsSLO https://cdn.jsdelivr.net/gh/P3TERX/aria2.conf/autoupload.sh ||
+            curl -fsSLO https://gh.p3terx.workers.dev/aria2.conf/master/autoupload.sh
+        [[ -e autoupload.sh ]] || {
+            echo
+            echo -e "${ERROR} 'autoupload.sh' doanload error, retry ..."
             sleep 5
         }
     done
