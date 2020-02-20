@@ -18,7 +18,7 @@ on:
     branches: 
       - master
     paths:
-      - 'root'
+      - 'root/**'
       - 'Dockerfile'
   schedule:
     - cron: 10 16 * * *
