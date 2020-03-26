@@ -13,9 +13,9 @@
 #=================================================
 name: Docker images publish
 
-on: 
+on:
   release:
-    types: [published]
+    types: published
   schedule:
     - cron: 10 8 * * 5
 
@@ -23,6 +23,7 @@ jobs:
   publish:
     name: Publish
     runs-on: ubuntu-latest
+    timeout-minutes: 10
 
     steps:
     - name: Checkout
@@ -30,13 +31,11 @@ jobs:
 
     - name: Install buildx
       run: |
-        curl -s https://api.github.com/repos/docker/buildx/releases/latest \
-        | grep "browser_download_url.*buildx-*.*linux-amd64" \
-        | cut -d : -f 2,3 \
-        | tr -d \" \
-        | wget -qi -
-        mkdir -p ~/.docker/cli-plugins/
-        mv buildx* ~/.docker/cli-plugins/docker-buildx
+        mkdir -vp ~/.docker/cli-plugins/
+        wget -nv -O- https://api.github.com/repos/docker/buildx/releases/latest \
+        | grep "browser_download_url.*linux-amd64\"" \
+        | cut -d '"' -f 4 \
+        | wget -nv -O ~/.docker/cli-plugins/docker-buildx -i-
         chmod +x ~/.docker/cli-plugins/docker-buildx
 
     - name: Set up buildx
