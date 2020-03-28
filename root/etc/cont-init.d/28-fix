@@ -1,0 +1,53 @@
+#!/usr/bin/with-contenv bash
+#=================================================
+#     _         _       ____    ____
+#    / \   _ __(_) __ _|___ \  |  _ \ _ __ ___
+#   / _ \ | '__| |/ _` | __) | | |_) | '__/ _ \
+#  / ___ \| |  | | (_| |/ __/  |  __/| | | (_) |
+# /_/   \_\_|  |_|\__,_|_____| |_|   |_|  \___/
+#
+# https://github.com/P3TERX/docker-aria2-pro
+# Description: A perfect Aria2 Docker image
+# Lisence: MIT
+# Author: P3TERX
+# Blog: https://p3terx.com (chinese)
+#=================================================
+
+[[ -e /config/HelloWorld ]] && exit 0
+
+sed -i "s@^\(downloadpath='\).*@\1/downloads'@" /config/*.sh
+sed -i "s@^\(DOWNLOAD_PATH='\).*@\1/downloads'@" /config/*.sh
+
+sed -i "s@^\(dir=\).*@\1/downloads@" /config/aria2.conf
+sed -i "s@^\(input-file=\).*@\1/config/aria2.session@" /config/aria2.conf
+sed -i "s@^\(save-session=\).*@\1/config/aria2.session@" /config/aria2.conf
+sed -i "s@^\(dht-file-path=\).*@\1/config/dht.dat@" /config/aria2.conf
+sed -i "s@^\(dht-file-path6=\).*@\1/config/dht6.dat@" /config/aria2.conf
+sed -i "s@^\(on-download-stop=\).*@\1/config/delete.sh@" /config/aria2.conf
+sed -i "s@^\(on-download-complete=\).*@\1/config/delete.aria2.sh@" /config/aria2.conf
+
+[[ $RPC_PORT ]] &&
+    sed -i "s@^\(rpc-listen-port=\).*@\1$RPC_PORT@" /config/aria2.conf
+
+[[ $LISTEN_PORT ]] && {
+    sed -i "s@^\(listen-port=\).*@\1$LISTEN_PORT@" /config/aria2.conf
+    sed -i "s@^\(dht-listen-port=\).*@\1$LISTEN_PORT@" /config/aria2.conf
+}
+
+[[ $RPC_SECRET ]] &&
+    sed -i "s@^\(rpc-secret=\).*@\1$RPC_SECRET@" /config/aria2.conf
+
+[[ $DISK_CACHE ]] &&
+    sed -i "s@^\(disk-cache=\).*@\1$DISK_CACHE@" /config/aria2.conf
+
+[[ "$RCLONE" = "enable" ]] &&
+    sed -i 's@^\(on-download-complete=\).*@\1/config/autoupload.sh@' /config/aria2.conf
+
+[[ $(grep 'root/.aria2' /config/aria2.conf) ]] && {
+    sed -i "s@root/.aria2@config@" /config/aria2.conf
+    sed -i "s@^\(rpc-listen-port=\).*@\16800@" /config/aria2.conf
+    sed -i "s@^\(listen-port=\).*@\16888@" /config/aria2.conf
+    sed -i "s@^\(dht-listen-port=\).*@\16888@" /config/aria2.conf
+}
+
+exit 0
