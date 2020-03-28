@@ -11,22 +11,17 @@
 # Author: P3TERX
 # Blog: https://p3terx.com (chinese)
 #=================================================
-FROM p3terx/s6-alpine:latest
+FROM p3terx/s6-alpine
 
 LABEL maintainer P3TERX
 
 ENV S6_BEHAVIOUR_IF_STAGE2_FAILS=1 \
     RCLONE_CONFIG=/config/rclone.conf
 
-RUN apk add --no-cache findutils ca-certificates dpkg && \
+RUN apk add --no-cache findutils dpkg && \
     curl -fsSL git.io/aria2c.sh | bash && \
     apk del --purge dpkg && \
     mkdir -p /config /downloads && \
     rm -rf /var/cache/apk/* /tmp/*
 
 COPY root /
-
-EXPOSE \
-    6800 \
-    6888 \
-    6888/udp
