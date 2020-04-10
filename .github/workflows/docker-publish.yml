@@ -14,10 +14,8 @@
 name: Docker images publish
 
 on:
-  release:
-    types: published
-  schedule:
-    - cron: 10 8 * * 5
+  repository_dispatch:
+    types: [Manual*, Auto*]
 
 jobs:
   publish:
