@@ -1,4 +1,3 @@
-#!/usr/bin/with-contenv bash
 #=================================================
 #     _         _       ____    ____
 #    / \   _ __(_) __ _|___ \  |  _ \ _ __ ___
@@ -12,9 +11,9 @@
 # Author: P3TERX
 # Blog: https://p3terx.com (chinese)
 #=================================================
-umask ${UMASK_SET:-022}
-
-trap '' TERM
-
-exec s6-setuidgid p3terx aria2c \
-    --conf-path=/config/aria2.conf
+SHELL=/bin/bash
+0	7	*	*	*	bash <(\
+curl -fsSL https://p3terx.github.io/aria2.conf/tracker.sh || \
+curl -fsSL https://cdn.jsdelivr.net/gh/P3TERX/aria2.conf/tracker.sh || \
+curl -fsSL https://gh.p3terx.workers.dev/aria2.conf/master/tracker.sh\
+) '/config/aria2.conf' RPC 2>&1 | tee /config/tracker.log

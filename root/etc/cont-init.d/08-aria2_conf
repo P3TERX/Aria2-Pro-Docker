@@ -98,9 +98,13 @@ done
 
 [[ -e aria2.session ]] || touch aria2.session
 
-[[ "$TRACKERS" = "no" ]] ||
+if [[ "$TRACKERS" = "no" ]]; then
+    crontab -ru p3terx
+else
     bash <(
         curl -fsSL https://p3terx.github.io/aria2.conf/tracker.sh ||
             curl -fsSL https://cdn.jsdelivr.net/gh/P3TERX/aria2.conf/tracker.sh ||
             curl -fsSL https://gh.p3terx.workers.dev/aria2.conf/master/tracker.sh
     )
+fi
+exit 0
