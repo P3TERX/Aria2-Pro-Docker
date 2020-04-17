@@ -15,7 +15,6 @@
 
 [[ -e /config/HelloWorld ]] && exit 0
 
-sed -i "s@^\(downloadpath='\).*@\1/downloads'@" /config/*.sh
 sed -i "s@^\(DOWNLOAD_PATH='\).*@\1/downloads'@" /config/*.sh
 
 sed -i "s@^\(dir=\).*@\1/downloads@" /config/aria2.conf
@@ -23,8 +22,6 @@ sed -i "s@^\(input-file=\).*@\1/config/aria2.session@" /config/aria2.conf
 sed -i "s@^\(save-session=\).*@\1/config/aria2.session@" /config/aria2.conf
 sed -i "s@^\(dht-file-path=\).*@\1/config/dht.dat@" /config/aria2.conf
 sed -i "s@^\(dht-file-path6=\).*@\1/config/dht6.dat@" /config/aria2.conf
-sed -i "s@^\(on-download-stop=\).*@\1/config/delete.sh@" /config/aria2.conf
-sed -i "s@^\(on-download-complete=\).*@\1/config/delete.aria2.sh@" /config/aria2.conf
 
 [[ $RPC_PORT ]] &&
     sed -i "s@^\(rpc-listen-port=\).*@\1$RPC_PORT@" /config/aria2.conf
