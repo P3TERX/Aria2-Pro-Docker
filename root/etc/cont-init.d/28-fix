@@ -40,6 +40,11 @@ sed -i "s@^\(on-download-complete=\).*@\1/config/delete.aria2.sh@" /config/aria2
 [[ $DISK_CACHE ]] &&
     sed -i "s@^\(disk-cache=\).*@\1$DISK_CACHE@" /config/aria2.conf
 
+[[ "$IPV6_MODE" = "true" || "$IPV6_MODE" = "enable" ]] && {
+    sed -i "s@^\(disable-ipv6=\).*@\1false@" /config/aria2.conf
+    sed -i "s@^\(enable-dht6=\).*@\1true@" /config/aria2.conf
+}
+
 [[ "$RCLONE" = "enable" ]] &&
     sed -i 's@^\(on-download-complete=\).*@\1/config/autoupload.sh@' /config/aria2.conf
 
