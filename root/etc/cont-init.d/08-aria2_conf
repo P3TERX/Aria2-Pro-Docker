@@ -12,6 +12,7 @@
 # Author: P3TERX
 # Blog: https://p3terx.com (chinese)
 #=================================================
+
 Green_font_prefix="\033[32m"
 Red_font_prefix="\033[31m"
 Green_background_prefix="\033[42;37m"
@@ -29,14 +30,12 @@ while [[ ! -e aria2.conf ]]; do
         curl -fsSLO https://cdn.jsdelivr.net/gh/P3TERX/aria2.conf/aria2.conf ||
         curl -fsSLO https://gh.p3terx.workers.dev/aria2.conf/master/aria2.conf
     [[ -e aria2.conf ]] && {
-        sed -i "s@^\(console-log-level=\).*@\1notice@" aria2.conf
-        sed -i "s@^\(rpc-listen-port=\).*@\1${RPC_PORT:-6800}@" aria2.conf
         sed -i "s@^\(rpc-listen-port=\).*@\1${RPC_PORT:-6800}@" aria2.conf
         sed -i "s@^\(listen-port=\).*@\1${LISTEN_PORT:-6888}@" aria2.conf
         sed -i "s@^\(dht-listen-port=\).*@\1${LISTEN_PORT:-6888}@" aria2.conf
         sed -i "s@^\(dir=\).*@\1/downloads@" aria2.conf
         sed -i "s@root/.aria2@config@" aria2.conf
-        #[[ $TZ != "Asia/Shanghai" ]] && sed -i '/^$/d;/^#/d' aria2.conf
+        [[ $TZ != "Asia/Shanghai" ]] && sed -i '9,$s/#.*//;/^$/d' aria2.conf
     } || {
         echo
         echo -e "${ERROR} 'aria2.conf' doanload error, retry ..."
