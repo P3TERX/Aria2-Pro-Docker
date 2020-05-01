@@ -21,25 +21,21 @@ Font_color_suffix="\033[0m"
 INFO="[${Green_font_prefix}INFO${Font_color_suffix}]"
 ERROR="[${Red_font_prefix}ERROR${Font_color_suffix}]"
 
-if [[ "$SPECIAL_MODE" = "rclone" || "$RCLONE" = "enable" ]]; then
-    echo
-    echo -e "${INFO} Installation RCLONE ..."
-    apk add -q --no-cache unzip
-    curl -fsSL https://rclone.org/install.sh | bash
+if [[ "$SPECIAL_MODE" = "move" ]]; then
     cd /config
-    [[ ! -e rclone/rclone.conf ]] || {
-        mv rclone/rclone.conf .
-        rm -rf rclone
-    }
-    while [[ ! -e autoupload.sh ]]; do
+    while [[ ! -e move.sh ]]; do
         echo
-        echo -e "${INFO} Doanload 'autoupload.sh' ..."
-        curl -fsSLO https://p3terx.github.io/aria2.conf/autoupload.sh ||
-            curl -fsSLO https://cdn.jsdelivr.net/gh/P3TERX/aria2.conf/autoupload.sh ||
-            curl -fsSLO https://gh.p3terx.workers.dev/aria2.conf/master/autoupload.sh
-        [[ -e autoupload.sh ]] || {
+        echo -e "${INFO} Doanload 'move.sh' ..."
+        curl -fsSLO https://p3terx.github.io/aria2.conf/move.sh ||
+            curl -fsSLO https://cdn.jsdelivr.net/gh/P3TERX/aria2.conf/move.sh ||
+            curl -fsSLO https://gh.p3terx.workers.dev/aria2.conf/master/move.sh
+        [[ -e move.sh ]] && {
+            sed -i "s@^\(DOWNLOAD_PATH='\).*@\1/downloads'@" move.sh
+            sed -i "s@^\(TARGET_DIR='\).*@\1/downloads/completed'@" move.sh
+            sed -i "s@\(LOG_PATH='\).*@\1/config/move.log'@" move.sh
+        } || {
             echo
-            echo -e "${ERROR} 'autoupload.sh' doanload error, retry ..."
+            echo -e "${ERROR} 'move.sh' doanload error, retry ..."
             sleep 5
         }
     done
