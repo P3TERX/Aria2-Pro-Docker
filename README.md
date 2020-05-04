@@ -15,6 +15,8 @@ A perfect Aria2 Docker image.
 
 * Supported platforms: `amd64`, `i386`, `arm64`, `arm/v7`, `arm/v6`
 * Full Function: `Async DNS`, `BitTorrent`, `Firefox3 Cookie`, `GZip`, `HTTPS`, `Message Digest`, `Metalink`, `XML-RPC`, `SFTP`
+* `max-connection-per-server` unlimited.
+* retry on slow speed (`lowest-speed-limit`) and connection close
 * High BT download rate and speed.
 * Get BitTorrent tracker automatically.
 * Download error or cancel download automatically delete files to prevent disk space consumption.
