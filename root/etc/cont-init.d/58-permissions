@@ -14,5 +14,5 @@
 #=================================================
 chown -R p3terx:p3terx /config
 chown -R p3terx:p3terx /downloads
-chmod 755 /config/*.sh
-chmod 600 /config/aria2.conf
+chmod 700 /config/*.sh
+chmod 600 /config/*.conf
