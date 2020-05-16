@@ -25,7 +25,7 @@ if [[ "$SPECIAL_MODE" = "move" ]]; then
     cd /config
     while [[ ! -f move.sh ]]; do
         echo
-        echo -e "${INFO} Doanload 'move.sh' ..."
+        echo -e "${INFO} Download 'move.sh' ..."
         curl -fsSLO https://p3terx.github.io/aria2.conf/move.sh ||
             curl -fsSLO https://cdn.jsdelivr.net/gh/P3TERX/aria2.conf/move.sh ||
             curl -fsSLO https://gh.p3terx.workers.dev/aria2.conf/master/move.sh
@@ -35,7 +35,7 @@ if [[ "$SPECIAL_MODE" = "move" ]]; then
             sed -i "s@\(LOG_PATH='\).*@\1/config/move.log'@" move.sh
         } || {
             echo
-            echo -e "${ERROR} 'move.sh' doanload error, retry ..."
+            echo -e "${ERROR} 'move.sh' download error, retry ..."
             sleep 5
         }
     done

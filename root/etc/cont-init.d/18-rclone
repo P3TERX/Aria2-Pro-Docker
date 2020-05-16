@@ -33,13 +33,13 @@ if [[ "$SPECIAL_MODE" = "rclone" || "$RCLONE" = "enable" ]]; then
     }
     while [[ ! -f autoupload.sh ]]; do
         echo
-        echo -e "${INFO} Doanload 'autoupload.sh' ..."
+        echo -e "${INFO} Download 'autoupload.sh' ..."
         curl -fsSLO https://p3terx.github.io/aria2.conf/autoupload.sh ||
             curl -fsSLO https://cdn.jsdelivr.net/gh/P3TERX/aria2.conf/autoupload.sh ||
             curl -fsSLO https://gh.p3terx.workers.dev/aria2.conf/master/autoupload.sh
         [[ ! -f autoupload.sh ]] && {
             echo
-            echo -e "${ERROR} 'autoupload.sh' doanload error, retry ..."
+            echo -e "${ERROR} 'autoupload.sh' download error, retry ..."
             sleep 5
         }
     done

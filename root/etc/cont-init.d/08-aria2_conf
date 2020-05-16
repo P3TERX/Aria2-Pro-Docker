@@ -25,7 +25,7 @@ mkdir -p /config && cd /config
 
 while [[ ! -f aria2.conf ]]; do
     echo
-    echo -e "${INFO} Doanload 'aria2.conf' ..."
+    echo -e "${INFO} Download 'aria2.conf' ..."
     curl -fsSLO https://p3terx.github.io/aria2.conf/aria2.conf ||
         curl -fsSLO https://cdn.jsdelivr.net/gh/P3TERX/aria2.conf/aria2.conf ||
         curl -fsSLO https://gh.p3terx.workers.dev/aria2.conf/master/aria2.conf
@@ -38,59 +38,59 @@ while [[ ! -f aria2.conf ]]; do
         [[ $TZ != "Asia/Shanghai" ]] && sed -i '9,$s/#.*//;/^$/d' aria2.conf
     } || {
         echo
-        echo -e "${ERROR} 'aria2.conf' doanload error, retry ..."
+        echo -e "${ERROR} 'aria2.conf' download error, retry ..."
         sleep 5
     }
 done
 
 while [[ ! -f delete.aria2.sh ]]; do
     echo
-    echo -e "${INFO} Doanload 'delete.aria2.sh' ..."
+    echo -e "${INFO} Download 'delete.aria2.sh' ..."
     curl -fsSLO https://p3terx.github.io/aria2.conf/delete.aria2.sh ||
         curl -fsSLO https://cdn.jsdelivr.net/gh/P3TERX/aria2.conf/delete.aria2.sh ||
         curl -fsSLO https://gh.p3terx.workers.dev/aria2.conf/master/delete.aria2.sh
     [[ -s delete.aria2.sh ]] || {
         echo
-        echo -e "${ERROR} 'delete.aria2.sh' doanload error, retry ..."
+        echo -e "${ERROR} 'delete.aria2.sh' download error, retry ..."
         sleep 5
     }
 done
 
 while [[ ! -f delete.sh ]]; do
     echo
-    echo -e "${INFO} Doanload 'delete.sh' ..."
+    echo -e "${INFO} Download 'delete.sh' ..."
     curl -fsSLO https://p3terx.github.io/aria2.conf/delete.sh ||
         curl -fsSLO https://cdn.jsdelivr.net/gh/P3TERX/aria2.conf/delete.sh ||
         curl -fsSLO https://gh.p3terx.workers.dev/aria2.conf/master/delete.sh
     [[ -s delete.sh ]] || {
         echo
-        echo -e "${ERROR} 'delete.sh' doanload error, retry ..."
+        echo -e "${ERROR} 'delete.sh' download error, retry ..."
         sleep 5
     }
 done
 
 while [[ ! -f dht.dat ]]; do
     echo
-    echo -e "${INFO} Doanload 'dht.dat' ..."
+    echo -e "${INFO} Download 'dht.dat' ..."
     curl -fsSLO https://p3terx.github.io/aria2.conf/dht.dat ||
         curl -fsSLO https://cdn.jsdelivr.net/gh/P3TERX/aria2.conf/dht.dat ||
         curl -fsSLO https://gh.p3terx.workers.dev/aria2.conf/master/dht.dat
     [[ -s dht.dat ]] || {
         echo
-        echo -e "${ERROR} 'dht.dat' doanload error, retry ..."
+        echo -e "${ERROR} 'dht.dat' download error, retry ..."
         sleep 5
     }
 done
 
 while [[ ! -f dht6.dat ]]; do
     echo
-    echo -e "${INFO} Doanload 'dht6.dat' ..."
+    echo -e "${INFO} Download 'dht6.dat' ..."
     curl -fsSLO https://p3terx.github.io/aria2.conf/dht6.dat ||
         curl -fsSLO https://cdn.jsdelivr.net/gh/P3TERX/aria2.conf/dht6.dat ||
         curl -fsSLO https://gh.p3terx.workers.dev/aria2.conf/master/dht6.dat
     [[ -s dht6.dat ]] || {
         echo
-        echo -e "${ERROR} 'dht6.dat' doanload error, retry ..."
+        echo -e "${ERROR} 'dht6.dat' download error, retry ..."
         sleep 5
     }
 done
