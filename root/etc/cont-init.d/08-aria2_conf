@@ -23,13 +23,13 @@ ERROR="[${Red_font_prefix}ERROR${Font_color_suffix}]"
 
 mkdir -p /config && cd /config
 
-while [[ ! -e aria2.conf ]]; do
+while [[ ! -f aria2.conf ]]; do
     echo
     echo -e "${INFO} Doanload 'aria2.conf' ..."
     curl -fsSLO https://p3terx.github.io/aria2.conf/aria2.conf ||
         curl -fsSLO https://cdn.jsdelivr.net/gh/P3TERX/aria2.conf/aria2.conf ||
         curl -fsSLO https://gh.p3terx.workers.dev/aria2.conf/master/aria2.conf
-    [[ -e aria2.conf ]] && {
+    [[ -s aria2.conf ]] && {
         sed -i "s@^\(rpc-listen-port=\).*@\1${RPC_PORT:-6800}@" aria2.conf
         sed -i "s@^\(listen-port=\).*@\1${LISTEN_PORT:-6888}@" aria2.conf
         sed -i "s@^\(dht-listen-port=\).*@\1${LISTEN_PORT:-6888}@" aria2.conf
@@ -43,63 +43,62 @@ while [[ ! -e aria2.conf ]]; do
     }
 done
 
-while [[ ! -e delete.aria2.sh ]]; do
+while [[ ! -f delete.aria2.sh ]]; do
     echo
     echo -e "${INFO} Doanload 'delete.aria2.sh' ..."
     curl -fsSLO https://p3terx.github.io/aria2.conf/delete.aria2.sh ||
         curl -fsSLO https://cdn.jsdelivr.net/gh/P3TERX/aria2.conf/delete.aria2.sh ||
         curl -fsSLO https://gh.p3terx.workers.dev/aria2.conf/master/delete.aria2.sh
-    [[ -e delete.aria2.sh ]] || {
+    [[ -s delete.aria2.sh ]] || {
         echo
         echo -e "${ERROR} 'delete.aria2.sh' doanload error, retry ..."
         sleep 5
     }
 done
 
-while [[ ! -e delete.sh ]]; do
+while [[ ! -f delete.sh ]]; do
     echo
     echo -e "${INFO} Doanload 'delete.sh' ..."
     curl -fsSLO https://p3terx.github.io/aria2.conf/delete.sh ||
         curl -fsSLO https://cdn.jsdelivr.net/gh/P3TERX/aria2.conf/delete.sh ||
         curl -fsSLO https://gh.p3terx.workers.dev/aria2.conf/master/delete.sh
-    [[ -e delete.sh ]] || {
+    [[ -s delete.sh ]] || {
         echo
         echo -e "${ERROR} 'delete.sh' doanload error, retry ..."
         sleep 5
     }
 done
 
-while [[ ! -e dht.dat ]]; do
+while [[ ! -f dht.dat ]]; do
     echo
     echo -e "${INFO} Doanload 'dht.dat' ..."
     curl -fsSLO https://p3terx.github.io/aria2.conf/dht.dat ||
         curl -fsSLO https://cdn.jsdelivr.net/gh/P3TERX/aria2.conf/dht.dat ||
         curl -fsSLO https://gh.p3terx.workers.dev/aria2.conf/master/dht.dat
-    [[ -e dht.dat ]] || {
+    [[ -s dht.dat ]] || {
         echo
         echo -e "${ERROR} 'dht.dat' doanload error, retry ..."
         sleep 5
     }
 done
 
-while [[ ! -e dht6.dat ]]; do
+while [[ ! -f dht6.dat ]]; do
     echo
     echo -e "${INFO} Doanload 'dht6.dat' ..."
     curl -fsSLO https://p3terx.github.io/aria2.conf/dht6.dat ||
         curl -fsSLO https://cdn.jsdelivr.net/gh/P3TERX/aria2.conf/dht6.dat ||
         curl -fsSLO https://gh.p3terx.workers.dev/aria2.conf/master/dht6.dat
-    [[ -e dht6.dat ]] || {
+    [[ -s dht6.dat ]] || {
         echo
         echo -e "${ERROR} 'dht6.dat' doanload error, retry ..."
         sleep 5
     }
 done
 
-[[ -e aria2.session ]] || touch aria2.session
+[[ -f aria2.session ]] || touch aria2.session
 
-if [[ "$TRACKERS" = "no" ]]; then
-    crontab -ru p3terx
-else
+if [[ "$TRACKERS" != "no" ]]; then
+    rm -f /etc/services.d/crond/down
     bash <(
         curl -fsSL https://p3terx.github.io/aria2.conf/tracker.sh ||
             curl -fsSL https://cdn.jsdelivr.net/gh/P3TERX/aria2.conf/tracker.sh ||
