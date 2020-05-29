@@ -37,7 +37,10 @@ if [[ "$SPECIAL_MODE" = "rclone" || "$RCLONE" = "enable" ]]; then
         curl -fsSLO https://p3terx.github.io/aria2.conf/autoupload.sh ||
             curl -fsSLO https://cdn.jsdelivr.net/gh/P3TERX/aria2.conf/autoupload.sh ||
             curl -fsSLO https://gh.p3terx.workers.dev/aria2.conf/master/autoupload.sh
-        [[ ! -f autoupload.sh ]] && {
+        [[ -s autoupload.sh ]] && {
+            sed -i "s@^\(DOWNLOAD_PATH='\).*@\1/downloads'@" autoupload.sh
+            sed -i "s@\(LOG_PATH='\).*@\1/config/autoupload.log'@" autoupload.sh
+        } || {
             echo
             echo -e "${ERROR} 'autoupload.sh' download error, retry ..."
             sleep 5
