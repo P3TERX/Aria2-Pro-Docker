@@ -13,7 +13,15 @@
 # Blog: https://p3terx.com (chinese)
 #=================================================
 
-[[ -e /config/HelloWorld ]] && exit 0
+[[ $(grep 'root/.aria2' /config/aria2.conf) ]] && {
+    sed -i "s@root/.aria2@config@" /config/aria2.conf
+    sed -i "s@^\(rpc-listen-port=\).*@\16800@" /config/aria2.conf
+    sed -i "s@^\(listen-port=\).*@\16888@" /config/aria2.conf
+    sed -i "s@^\(dht-listen-port=\).*@\16888@" /config/aria2.conf
+}
+
+[[ $(grep 'root/.aria2' /config/*.sh) ]] &&
+    sed -i "s@root/.aria2@config@" /config/*.sh
 
 sed -i "s@^\(DOWNLOAD_PATH='\).*@\1/downloads'@" /config/*.sh
 
@@ -22,6 +30,8 @@ sed -i "s@^\(input-file=\).*@\1/config/aria2.session@" /config/aria2.conf
 sed -i "s@^\(save-session=\).*@\1/config/aria2.session@" /config/aria2.conf
 sed -i "s@^\(dht-file-path=\).*@\1/config/dht.dat@" /config/aria2.conf
 sed -i "s@^\(dht-file-path6=\).*@\1/config/dht6.dat@" /config/aria2.conf
+
+[[ -e /config/HelloWorld ]] && exit 0
 
 [[ $RPC_PORT ]] &&
     sed -i "s@^\(rpc-listen-port=\).*@\1$RPC_PORT@" /config/aria2.conf
@@ -47,12 +57,5 @@ sed -i "s@^\(dht-file-path6=\).*@\1/config/dht6.dat@" /config/aria2.conf
 
 [[ "$SPECIAL_MODE" = "move" ]] &&
     sed -i 's@^\(on-download-complete=\).*@\1/config/move.sh@' /config/aria2.conf
-
-[[ $(grep 'root/.aria2' /config/aria2.conf) ]] && {
-    sed -i "s@root/.aria2@config@" /config/aria2.conf
-    sed -i "s@^\(rpc-listen-port=\).*@\16800@" /config/aria2.conf
-    sed -i "s@^\(listen-port=\).*@\16888@" /config/aria2.conf
-    sed -i "s@^\(dht-listen-port=\).*@\16888@" /config/aria2.conf
-}
 
 exit 0
