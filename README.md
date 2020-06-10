@@ -34,7 +34,9 @@ docker run -d \
     -e PUID=$UID \
     -e PGID=$GID \
     -e RPC_SECRET=<TOKEN> \
+    -e RPC_PORT=6800 \
     -p 6800:6800 \
+    -e LISTEN_PORT=6888 \
     -p 6888:6888 \
     -p 6888:6888/udp \
     -v ~/aria2-config:/config \
@@ -42,7 +44,15 @@ docker run -d \
     p3terx/aria2-pro
 ```
 
-- Then you need a WebUI for control, such as [AriaNg](https://github.com/mayswind/AriaNg). This link is provided by the developer and can be used directly: http://ariang.mayswind.net/latest
+- Then you need a WebUI for control, such as [AriaNg](https://github.com/mayswind/AriaNg). [This link](http://ariang.mayswind.net/latest) is provided by the developer and can be used directly. Or use Docker to deploy it yourself:
+```
+docker run -d \
+    --name ariang \
+    --log-opt max-size=1m \
+    --restart unless-stopped \
+    -p 6880:6880 \
+    p3terx/ariang
+```
 
 > **TIPS:** It is important for the firewall to open ports.
 
@@ -53,9 +63,11 @@ docker run -d \
 | `-e PUID=$UID`<br>`-e PGID=$GID` | Bind UID and GID to the container, which means you can use a non-root user to manage downloaded files. |
 | `-e RPC_SECRET=<TOKEN>` | Set RPC secret authorization token. Ignoring it can be set in the configuration file. |
 | `-e TZ=Asia/Shanghai` | Specify a timezone to use e.g. `Asia/Shanghai` |
-| `-p 6800:6800` | RPC listen port |
-| `-p 6888:6888` | BT listen port (TCP)|
-| `-p 6888:6888/udp` | DHT lisen port (UDP) |
+| `-e RPC_PORT=6800` | Set up RPC listen port |
+| `-p 6800:6800` | bind RPC listen port |
+| `-e LISTEN_PORT=6888` | Set up listen port |
+| `-p 6888:6888` | Bind BT listen port (TCP) |
+| `-p 6888:6888/udp` | Bind DHT lisen port (UDP) |
 | `-v ~/aria2-config:/config` | Contains all relevant configuration files. |
 | `-v ~/downloads:/downloads` | Location of downloads on disk. |
 | `-e TRACKERS=no` | Disable BT tracker update, use this parameter if you need PT download. |
