@@ -14,11 +14,12 @@
 name: Docker images build test
 
 on:
+  repository_dispatch:
   push:
     branches: 
       - master
     paths:
-      - 'root/**'
+      - 'rootfs/**'
       - 'Dockerfile'
   schedule:
     - cron: 10 16 * * *
