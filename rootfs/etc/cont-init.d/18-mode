@@ -13,59 +13,31 @@
 # Blog: https://p3terx.com (chinese)
 #=================================================
 
-Green_font_prefix="\033[32m"
-Red_font_prefix="\033[31m"
-Green_background_prefix="\033[42;37m"
-Red_background_prefix="\033[41;37m"
-Font_color_suffix="\033[0m"
-INFO="[${Green_font_prefix}INFO${Font_color_suffix}]"
-ERROR="[${Red_font_prefix}ERROR${Font_color_suffix}]"
+cd /config
+. /etc/init-base
 
-if [[ "$SPECIAL_MODE" = "rclone" || "$RCLONE" = "enable" ]]; then
+RCLONE_MODE() {
     echo
     echo -e "${INFO} Installing RCLONE ..."
     [[ -L /usr/bin/unzip ]] && rm -f /usr/bin/unzip
     curl -fsSL https://rclone.org/install.sh | bash
-    cd /config
     [[ -f rclone/rclone.conf ]] && {
         mv rclone/rclone.conf .
         rm -rf rclone
     }
-    while [[ ! -f autoupload.sh ]]; do
-        echo
-        echo -e "${INFO} Download 'autoupload.sh' ..."
-        curl -fsSLO https://p3terx.github.io/aria2.conf/autoupload.sh ||
-            curl -fsSLO https://cdn.jsdelivr.net/gh/P3TERX/aria2.conf/autoupload.sh ||
-            curl -fsSLO https://gh.p3terx.workers.dev/aria2.conf/master/autoupload.sh
-        [[ -s autoupload.sh ]] && {
-            sed -i "s@^\(DOWNLOAD_PATH='\).*@\1/downloads'@" autoupload.sh
-            sed -i "s@\(LOG_PATH='\).*@\1/config/autoupload.log'@" autoupload.sh
-        } || {
-            echo
-            echo -e "${ERROR} 'autoupload.sh' download error, retry ..."
-            sleep 5
-        }
-    done
-fi
+    PROFILE="autoupload.sh"
+    DOWNLOAD_PROFILE
+}
 
-if [[ "$SPECIAL_MODE" = "move" ]]; then
-    cd /config
-    while [[ ! -f move.sh ]]; do
-        echo
-        echo -e "${INFO} Download 'move.sh' ..."
-        curl -fsSLO https://p3terx.github.io/aria2.conf/move.sh ||
-            curl -fsSLO https://cdn.jsdelivr.net/gh/P3TERX/aria2.conf/move.sh ||
-            curl -fsSLO https://gh.p3terx.workers.dev/aria2.conf/master/move.sh
-        [[ -s move.sh ]] && {
-            sed -i "s@^\(DOWNLOAD_PATH='\).*@\1/downloads'@" move.sh
-            sed -i "s@^\(TARGET_DIR='\).*@\1/downloads/completed'@" move.sh
-            sed -i "s@\(LOG_PATH='\).*@\1/config/move.log'@" move.sh
-        } || {
-            echo
-            echo -e "${ERROR} 'move.sh' download error, retry ..."
-            sleep 5
-        }
-    done
+MOVE_MODE() {
+    PROFILE="move.sh"
+    DOWNLOAD_PROFILE
+}
+
+if [[ "$SPECIAL_MODE" = "rclone" || "$RCLONE" = "enable" ]]; then
+    RCLONE_MODE
+elif [[ "$SPECIAL_MODE" = "move" ]]; then
+    MOVE_MODE
 fi
 
 exit 0

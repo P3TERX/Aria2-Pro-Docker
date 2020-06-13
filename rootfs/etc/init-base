@@ -1,0 +1,68 @@
+#=================================================
+#     _         _       ____    ____
+#    / \   _ __(_) __ _|___ \  |  _ \ _ __ ___
+#   / _ \ | '__| |/ _` | __) | | |_) | '__/ _ \
+#  / ___ \| |  | | (_| |/ __/  |  __/| | | (_) |
+# /_/   \_\_|  |_|\__,_|_____| |_|   |_|  \___/
+#
+# https://github.com/P3TERX/docker-aria2-pro
+# Description: A perfect Aria2 Docker image
+# Lisence: MIT
+# Author: P3TERX
+# Blog: https://p3terx.com (chinese)
+#=================================================
+
+Green_font_prefix="\033[32m"
+Red_font_prefix="\033[31m"
+Green_background_prefix="\033[42;37m"
+Red_background_prefix="\033[41;37m"
+Font_color_suffix="\033[0m"
+INFO="[${Green_font_prefix}INFO${Font_color_suffix}]"
+ERROR="[${Red_font_prefix}ERROR${Font_color_suffix}]"
+CURL_OPTIONS="-fsSL --connect-timeout 3 --max-time 3"
+PROFILE_URL1="https://p3terx.github.io/aria2.conf"
+PROFILE_URL2="https://aria2c.now.sh"
+PROFILE_URL3="https://gh.p3terx.workers.dev/aria2.conf/master"
+PROFILE_URL4="https://cdn.jsdelivr.net/gh/P3TERX/aria2.conf"
+
+ARIA2_CONF_CONVERSION() {
+    sed -i "s@^\(rpc-listen-port=\).*@\1${RPC_PORT:-6800}@" aria2.conf
+    sed -i "s@^\(listen-port=\).*@\1${LISTEN_PORT:-6888}@" aria2.conf
+    sed -i "s@^\(dht-listen-port=\).*@\1${LISTEN_PORT:-6888}@" aria2.conf
+    sed -i "s@^\(dir=\).*@\1/downloads@" aria2.conf
+    sed -i "s@root/.aria2@config@" aria2.conf
+    [[ $TZ != "Asia/Shanghai" ]] && sed -i '9,$s/#.*//;/^$/d' aria2.conf
+}
+
+AUTOUPLOAD_SH_CONVERSION() {
+    sed -i "s@^\(DOWNLOAD_PATH='\).*@\1/downloads'@" autoupload.sh
+    sed -i "s@\(LOG_PATH='\).*@\1/config/autoupload.log'@" autoupload.sh
+}
+
+MOVE_SH_CONVERSION() {
+    sed -i "s@^\(DOWNLOAD_PATH='\).*@\1/downloads'@" move.sh
+    sed -i "s@^\(TARGET_DIR='\).*@\1/downloads/completed'@" move.sh
+    sed -i "s@\(LOG_PATH='\).*@\1/config/move.log'@" move.sh
+}
+
+DOWNLOAD_PROFILE() {
+    while [[ ! -f ${PROFILE} ]]; do
+        rm -rf ${PROFILE}
+        echo
+        echo -e "${INFO} Downloading '${PROFILE}' ..."
+        curl -O ${CURL_OPTIONS} ${PROFILE_URL1}/${PROFILE} ||
+            curl -O ${CURL_OPTIONS} ${PROFILE_URL2}/${PROFILE} ||
+            curl -O ${CURL_OPTIONS} ${PROFILE_URL3}/${PROFILE}
+        [[ -s ${PROFILE} ]] && {
+            [[ "${PROFILE}" = "aria2.conf" ]] && ARIA2_CONF_CONVERSION
+            [[ "${PROFILE}" = "autoupload.sh" ]] && AUTOUPLOAD_SH_CONVERSION
+            [[ "${PROFILE}" = "move.sh" ]] && MOVE_SH_CONVERSION
+            echo
+            echo -e "${INFO} '${PROFILE}' download completed !"
+        } || {
+            echo
+            echo -e "${ERROR} '${PROFILE}' download error, retry ..."
+            sleep 3
+        }
+    done
+}
