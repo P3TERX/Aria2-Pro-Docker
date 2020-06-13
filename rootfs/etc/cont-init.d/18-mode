@@ -47,4 +47,25 @@ if [[ "$SPECIAL_MODE" = "rclone" || "$RCLONE" = "enable" ]]; then
         }
     done
 fi
+
+if [[ "$SPECIAL_MODE" = "move" ]]; then
+    cd /config
+    while [[ ! -f move.sh ]]; do
+        echo
+        echo -e "${INFO} Download 'move.sh' ..."
+        curl -fsSLO https://p3terx.github.io/aria2.conf/move.sh ||
+            curl -fsSLO https://cdn.jsdelivr.net/gh/P3TERX/aria2.conf/move.sh ||
+            curl -fsSLO https://gh.p3terx.workers.dev/aria2.conf/master/move.sh
+        [[ -s move.sh ]] && {
+            sed -i "s@^\(DOWNLOAD_PATH='\).*@\1/downloads'@" move.sh
+            sed -i "s@^\(TARGET_DIR='\).*@\1/downloads/completed'@" move.sh
+            sed -i "s@\(LOG_PATH='\).*@\1/config/move.log'@" move.sh
+        } || {
+            echo
+            echo -e "${ERROR} 'move.sh' download error, retry ..."
+            sleep 5
+        }
+    done
+fi
+
 exit 0

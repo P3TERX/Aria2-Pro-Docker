@@ -12,6 +12,7 @@
 # Author: P3TERX
 # Blog: https://p3terx.com (chinese)
 #=================================================
+
 chown -R p3terx:p3terx /config
 chown -R p3terx:p3terx /downloads
 chmod 700 /config/*.sh

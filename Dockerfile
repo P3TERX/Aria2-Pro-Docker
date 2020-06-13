@@ -11,9 +11,8 @@
 # Author: P3TERX
 # Blog: https://p3terx.com (chinese)
 #=================================================
-FROM p3terx/s6-alpine
 
-LABEL maintainer P3TERX
+FROM p3terx/s6-alpine
 
 ENV S6_BEHAVIOUR_IF_STAGE2_FAILS=1 \
     RCLONE_CONFIG=/config/rclone.conf
@@ -24,4 +23,4 @@ RUN apk add --no-cache findutils dpkg && \
     mkdir -p /config /downloads && \
     rm -rf /var/cache/apk/* /tmp/*
 
-COPY root /
+COPY rootfs /
