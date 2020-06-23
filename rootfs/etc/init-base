@@ -25,6 +25,17 @@ PROFILE_URL2="https://aria2c.now.sh"
 PROFILE_URL3="https://gh.p3terx.workers.dev/aria2.conf/master"
 PROFILE_URL4="https://cdn.jsdelivr.net/gh/P3TERX/aria2.conf"
 
+FILE_ALLOCATION_SET() {
+    TMP_FILE="/downloads/P3TERX.COM"
+    if fallocate -l 5G ${TMP_FILE}; then
+        FILE_ALLOCATION=falloc
+    else
+        FILE_ALLOCATION=none
+    fi
+    rm -f ${TMP_FILE}
+    sed -i "s@^\(file-allocation=\).*@\1${FILE_ALLOCATION}@" aria2.conf
+}
+
 ARIA2_CONF_CONVERSION() {
     sed -i "s@^\(rpc-listen-port=\).*@\1${RPC_PORT:-6800}@" aria2.conf
     sed -i "s@^\(listen-port=\).*@\1${LISTEN_PORT:-6888}@" aria2.conf
@@ -32,6 +43,7 @@ ARIA2_CONF_CONVERSION() {
     sed -i "s@^\(dir=\).*@\1/downloads@" aria2.conf
     sed -i "s@root/.aria2@config@" aria2.conf
     [[ $TZ != "Asia/Shanghai" ]] && sed -i '9,$s/#.*//;/^$/d' aria2.conf
+    FILE_ALLOCATION_SET
 }
 
 AUTOUPLOAD_SH_CONVERSION() {
