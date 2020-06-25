@@ -18,10 +18,11 @@ cd /config
 
 PROFILE_LIST="
 aria2.conf 
-delete.aria2.sh
+clean.sh
 delete.sh
 dht.dat
 dht6.dat
+LICENSE
 "
 
 for PROFILE in ${PROFILE_LIST}; do

@@ -53,7 +53,7 @@ sed -i "s@^\(dht-file-path6=\).*@\1/config/dht6.dat@" /config/aria2.conf
 }
 
 [[ "$SPECIAL_MODE" = "rclone" || "$RCLONE" = "enable" ]] &&
-    sed -i 's@^\(on-download-complete=\).*@\1/config/autoupload.sh@' /config/aria2.conf
+    sed -i 's@^\(on-download-complete=\).*@\1/config/upload.sh@' /config/aria2.conf
 
 [[ "$SPECIAL_MODE" = "move" ]] &&
     sed -i 's@^\(on-download-complete=\).*@\1/config/move.sh@' /config/aria2.conf

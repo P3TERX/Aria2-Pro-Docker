@@ -16,7 +16,7 @@
 cd /config
 . /etc/init-base
 
-RCLONE_MODE() {
+UPLOAD_MODE() {
     echo
     echo -e "${INFO} Installing RCLONE ..."
     [[ -L /usr/bin/unzip ]] && rm -f /usr/bin/unzip
@@ -25,7 +25,7 @@ RCLONE_MODE() {
         mv rclone/rclone.conf .
         rm -rf rclone
     }
-    PROFILE="autoupload.sh"
+    PROFILE="upload.sh"
     DOWNLOAD_PROFILE
 }
 
@@ -35,7 +35,8 @@ MOVE_MODE() {
 }
 
 if [[ "$SPECIAL_MODE" = "rclone" || "$RCLONE" = "enable" ]]; then
-    RCLONE_MODE
+    [[ -e "autoupload.sh" ]] && mv -f autoupload.sh upload.sh
+    UPLOAD_MODE
 elif [[ "$SPECIAL_MODE" = "move" ]]; then
     MOVE_MODE
 fi

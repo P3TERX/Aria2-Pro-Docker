@@ -42,13 +42,13 @@ ARIA2_CONF_CONVERSION() {
     sed -i "s@^\(dht-listen-port=\).*@\1${LISTEN_PORT:-6888}@" aria2.conf
     sed -i "s@^\(dir=\).*@\1/downloads@" aria2.conf
     sed -i "s@root/.aria2@config@" aria2.conf
-    [[ $TZ != "Asia/Shanghai" ]] && sed -i '9,$s/#.*//;/^$/d' aria2.conf
+    [[ $TZ != "Asia/Shanghai" ]] && sed -i '11,$s/#.*//;/^$/d' aria2.conf
     FILE_ALLOCATION_SET
 }
 
-AUTOUPLOAD_SH_CONVERSION() {
-    sed -i "s@^\(DOWNLOAD_PATH='\).*@\1/downloads'@" autoupload.sh
-    sed -i "s@\(LOG_PATH='\).*@\1/config/autoupload.log'@" autoupload.sh
+UPLOAD_SH_CONVERSION() {
+    sed -i "s@^\(DOWNLOAD_PATH='\).*@\1/downloads'@" upload.sh
+    sed -i "s@\(LOG_PATH='\).*@\1/config/upload.log'@" upload.sh
 }
 
 MOVE_SH_CONVERSION() {
@@ -67,7 +67,7 @@ DOWNLOAD_PROFILE() {
             curl -O ${CURL_OPTIONS} ${PROFILE_URL3}/${PROFILE}
         [[ -s ${PROFILE} ]] && {
             [[ "${PROFILE}" = "aria2.conf" ]] && ARIA2_CONF_CONVERSION
-            [[ "${PROFILE}" = "autoupload.sh" ]] && AUTOUPLOAD_SH_CONVERSION
+            [[ "${PROFILE}" = "upload.sh" ]] && UPLOAD_SH_CONVERSION
             [[ "${PROFILE}" = "move.sh" ]] && MOVE_SH_CONVERSION
             echo
             echo -e "${INFO} '${PROFILE}' download completed !"
