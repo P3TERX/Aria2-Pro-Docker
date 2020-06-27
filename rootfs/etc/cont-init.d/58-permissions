@@ -1,5 +1,4 @@
 #!/bin/sh
-#=================================================
 #     _         _       ____    ____
 #    / \   _ __(_) __ _|___ \  |  _ \ _ __ ___
 #   / _ \ | '__| |/ _` | __) | | |_) | '__/ _ \
@@ -7,11 +6,11 @@
 # /_/   \_\_|  |_|\__,_|_____| |_|   |_|  \___/
 #
 # https://github.com/P3TERX/docker-aria2-pro
-# Description: A perfect Aria2 Docker image
-# Lisence: MIT
-# Author: P3TERX
-# Blog: https://p3terx.com (chinese)
-#=================================================
+#
+# Copyright (c) 2020 P3TERX <https://p3terx.com>
+#
+# This is free software, licensed under the MIT License.
+# See /LICENSE for more information.
 
 chown -R p3terx:p3terx /config
 chown -R p3terx:p3terx /downloads
