@@ -17,24 +17,21 @@ cd /config
 . /etc/init-base
 
 PROFILE_LIST="
-aria2.conf 
-clean.sh
+aria2.conf
 delete.sh
 dht.dat
 dht6.dat
 LICENSE
 "
 
-for PROFILE in ${PROFILE_LIST}; do
-    DOWNLOAD_PROFILE
-done
+DOWNLOAD_PROFILE
 
 [[ ! -f aria2.session ]] && {
     rm -rf aria2.session
     touch aria2.session
 }
 
-if ! [[ "$UPDATE_TRACKERS" = "false" || "$UPDATE_TRACKERS" = "disable" || "$TRACKERS" = "no" ]]; then
+if ! [[ "$UPDATE_TRACKERS" = "false" || "$UPDATE_TRACKERS" = "disable" ]]; then
     rm -f /etc/services.d/crond/down
     bash <(
         curl ${CURL_OPTIONS} ${PROFILE_URL1}/tracker.sh ||

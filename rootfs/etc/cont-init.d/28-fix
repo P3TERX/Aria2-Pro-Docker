@@ -13,11 +13,11 @@
 # Blog: https://p3terx.com (chinese)
 #=================================================
 
+cd /config
+. /etc/init-base
+
 [[ $(grep 'root/.aria2' /config/aria2.conf) ]] && {
-    sed -i "s@root/.aria2@config@" /config/aria2.conf
-    sed -i "s@^\(rpc-listen-port=\).*@\16800@" /config/aria2.conf
-    sed -i "s@^\(listen-port=\).*@\16888@" /config/aria2.conf
-    sed -i "s@^\(dht-listen-port=\).*@\16888@" /config/aria2.conf
+    ARIA2_CONF_CONVERSION
 }
 
 [[ $(grep 'root/.aria2' /config/*.sh) ]] &&
@@ -52,7 +52,7 @@ sed -i "s@^\(dht-file-path6=\).*@\1/config/dht6.dat@" /config/aria2.conf
     sed -i "s@^\(enable-dht6=\).*@\1true@" /config/aria2.conf
 }
 
-[[ "$SPECIAL_MODE" = "rclone" || "$RCLONE" = "enable" ]] &&
+[[ "$SPECIAL_MODE" = "rclone" ]] &&
     sed -i 's@^\(on-download-complete=\).*@\1/config/upload.sh@' /config/aria2.conf
 
 [[ "$SPECIAL_MODE" = "move" ]] &&

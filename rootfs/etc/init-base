@@ -42,6 +42,8 @@ ARIA2_CONF_CONVERSION() {
     sed -i "s@^\(dht-listen-port=\).*@\1${LISTEN_PORT:-6888}@" aria2.conf
     sed -i "s@^\(dir=\).*@\1/downloads@" aria2.conf
     sed -i "s@root/.aria2@config@" aria2.conf
+    sed -i "s@^#\(retry-on-.*=\).*@\1true@" aria2.conf
+    sed -i "s@^\(max-connection-per-server=\).*@\132@" aria2.conf
     [[ $TZ != "Asia/Shanghai" ]] && sed -i '11,$s/#.*//;/^$/d' aria2.conf
     FILE_ALLOCATION_SET
 }
@@ -58,23 +60,25 @@ MOVE_SH_CONVERSION() {
 }
 
 DOWNLOAD_PROFILE() {
-    while [[ ! -f ${PROFILE} ]]; do
-        rm -rf ${PROFILE}
-        echo
-        echo -e "${INFO} Downloading '${PROFILE}' ..."
-        curl -O ${CURL_OPTIONS} ${PROFILE_URL1}/${PROFILE} ||
-            curl -O ${CURL_OPTIONS} ${PROFILE_URL2}/${PROFILE} ||
-            curl -O ${CURL_OPTIONS} ${PROFILE_URL3}/${PROFILE}
-        [[ -s ${PROFILE} ]] && {
-            [[ "${PROFILE}" = "aria2.conf" ]] && ARIA2_CONF_CONVERSION
-            [[ "${PROFILE}" = "upload.sh" ]] && UPLOAD_SH_CONVERSION
-            [[ "${PROFILE}" = "move.sh" ]] && MOVE_SH_CONVERSION
+    for PROFILE in ${PROFILE_LIST}; do
+        while [[ ! -f ${PROFILE} ]]; do
+            rm -rf ${PROFILE}
             echo
-            echo -e "${INFO} '${PROFILE}' download completed !"
-        } || {
-            echo
-            echo -e "${ERROR} '${PROFILE}' download error, retry ..."
-            sleep 3
-        }
+            echo -e "${INFO} Downloading '${PROFILE}' ..."
+            curl -O ${CURL_OPTIONS} ${PROFILE_URL1}/${PROFILE} ||
+                curl -O ${CURL_OPTIONS} ${PROFILE_URL2}/${PROFILE} ||
+                curl -O ${CURL_OPTIONS} ${PROFILE_URL3}/${PROFILE}
+            [[ -s ${PROFILE} ]] && {
+                [[ "${PROFILE}" = "aria2.conf" ]] && ARIA2_CONF_CONVERSION
+                [[ "${PROFILE}" = "upload.sh" ]] && UPLOAD_SH_CONVERSION
+                [[ "${PROFILE}" = "move.sh" ]] && MOVE_SH_CONVERSION
+                echo
+                echo -e "${INFO} '${PROFILE}' download completed !"
+            } || {
+                echo
+                echo -e "${ERROR} '${PROFILE}' download error, retry ..."
+                sleep 3
+            }
+        done
     done
 }
