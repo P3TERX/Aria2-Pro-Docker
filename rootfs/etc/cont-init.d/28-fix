@@ -12,49 +12,45 @@
 # This is free software, licensed under the MIT License.
 # See /LICENSE for more information.
 
-cd /config
 . /etc/init-base
 
-[[ $(grep 'root/.aria2' /config/aria2.conf) ]] && {
-    ARIA2_CONF_CONVERSION
+[[ -e ${ARIA2_CONF_DIR}/delete.sh ]] && {
+    rm -f ${ARIA2_CONF_DIR}/*.sh
+    sed -i "s@^\(on-download-stop=\).*@\1${SCRIPT_DIR}/delete.sh@" ${ARIA2_CONF}
+    sed -i "s@^\(on-download-complete=\).*@\1${SCRIPT_DIR}/clean.sh@" ${ARIA2_CONF}
 }
 
-[[ $(grep 'root/.aria2' /config/*.sh) ]] &&
-    sed -i "s@root/.aria2@config@" /config/*.sh
+sed -i "s@^\(dir=\).*@\1/downloads@" ${ARIA2_CONF}
+sed -i "s@^\(input-file=\).*@\1${ARIA2_CONF_DIR}/aria2.session@" ${ARIA2_CONF}
+sed -i "s@^\(save-session=\).*@\1${ARIA2_CONF_DIR}/aria2.session@" ${ARIA2_CONF}
+sed -i "s@^\(dht-file-path=\).*@\1${ARIA2_CONF_DIR}/dht.dat@" ${ARIA2_CONF}
+sed -i "s@^\(dht-file-path6=\).*@\1${ARIA2_CONF_DIR}/dht6.dat@" ${ARIA2_CONF}
 
-sed -i "s@^\(DOWNLOAD_PATH='\).*@\1/downloads'@" /config/*.sh
+[[ -e ${ARIA2_CONF_DIR}/HelloWorld ]] && exit 0
 
-sed -i "s@^\(dir=\).*@\1/downloads@" /config/aria2.conf
-sed -i "s@^\(input-file=\).*@\1/config/aria2.session@" /config/aria2.conf
-sed -i "s@^\(save-session=\).*@\1/config/aria2.session@" /config/aria2.conf
-sed -i "s@^\(dht-file-path=\).*@\1/config/dht.dat@" /config/aria2.conf
-sed -i "s@^\(dht-file-path6=\).*@\1/config/dht6.dat@" /config/aria2.conf
+[[ ${RPC_PORT} ]] &&
+    sed -i "s@^\(rpc-listen-port=\).*@\1${RPC_PORT}@" ${ARIA2_CONF}
 
-[[ -e /config/HelloWorld ]] && exit 0
-
-[[ $RPC_PORT ]] &&
-    sed -i "s@^\(rpc-listen-port=\).*@\1$RPC_PORT@" /config/aria2.conf
-
-[[ $LISTEN_PORT ]] && {
-    sed -i "s@^\(listen-port=\).*@\1$LISTEN_PORT@" /config/aria2.conf
-    sed -i "s@^\(dht-listen-port=\).*@\1$LISTEN_PORT@" /config/aria2.conf
+[[ ${LISTEN_PORT} ]] && {
+    sed -i "s@^\(listen-port=\).*@\1${LISTEN_PORT}@" ${ARIA2_CONF}
+    sed -i "s@^\(dht-listen-port=\).*@\1${LISTEN_PORT}@" ${ARIA2_CONF}
 }
 
-[[ $RPC_SECRET ]] &&
-    sed -i "s@^\(rpc-secret=\).*@\1$RPC_SECRET@" /config/aria2.conf
+[[ ${RPC_SECRET} ]] &&
+    sed -i "s@^\(rpc-secret=\).*@\1${RPC_SECRET}@" ${ARIA2_CONF}
 
-[[ $DISK_CACHE ]] &&
-    sed -i "s@^\(disk-cache=\).*@\1$DISK_CACHE@" /config/aria2.conf
+[[ ${DISK_CACHE} ]] &&
+    sed -i "s@^\(disk-cache=\).*@\1${DISK_CACHE}@" ${ARIA2_CONF}
 
-[[ "$IPV6_MODE" = "true" || "$IPV6_MODE" = "enable" ]] && {
-    sed -i "s@^\(disable-ipv6=\).*@\1false@" /config/aria2.conf
-    sed -i "s@^\(enable-dht6=\).*@\1true@" /config/aria2.conf
+[[ "${IPV6_MODE}" = "true" || "${IPV6_MODE}" = "enable" ]] && {
+    sed -i "s@^\(disable-ipv6=\).*@\1false@" ${ARIA2_CONF}
+    sed -i "s@^\(enable-dht6=\).*@\1true@" ${ARIA2_CONF}
 }
 
-[[ "$SPECIAL_MODE" = "rclone" ]] &&
-    sed -i 's@^\(on-download-complete=\).*@\1/config/upload.sh@' /config/aria2.conf
+[[ "${SPECIAL_MODE}" = "rclone" ]] &&
+    sed -i "s@^\(on-download-complete=\).*@\1${SCRIPT_DIR}/upload.sh@" ${ARIA2_CONF}
 
-[[ "$SPECIAL_MODE" = "move" ]] &&
-    sed -i 's@^\(on-download-complete=\).*@\1/config/move.sh@' /config/aria2.conf
+[[ "${SPECIAL_MODE}" = "move" ]] &&
+    sed -i "s@^\(on-download-complete=\).*@\1${SCRIPT_DIR}/move.sh@" ${ARIA2_CONF}
 
 exit 0

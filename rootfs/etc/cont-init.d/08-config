@@ -12,11 +12,14 @@
 # This is free software, licensed under the MIT License.
 # See /LICENSE for more information.
 
-cd /config
 . /etc/init-base
 
-PROFILE_LIST="
+mkdir -p ${ARIA2_CONF_DIR} ${SCRIPT_DIR} ${DOWNLOAD_DIR}
+
+PROFILES="
+core
 aria2.conf
+script.conf
 delete.sh
 dht.dat
 dht6.dat
@@ -25,12 +28,12 @@ LICENSE
 
 DOWNLOAD_PROFILE
 
-[[ ! -f aria2.session ]] && {
-    rm -rf aria2.session
-    touch aria2.session
+[[ ! -f "${ARIA2_CONF_DIR}/aria2.session" ]] && {
+    rm -rf "${ARIA2_CONF_DIR}/aria2.session"
+    touch "${ARIA2_CONF_DIR}/aria2.session"
 }
 
-if ! [[ "$UPDATE_TRACKERS" = "false" || "$UPDATE_TRACKERS" = "disable" ]]; then
+if ! [[ "${UPDATE_TRACKERS}" = "false" || "${UPDATE_TRACKERS}" = "disable" ]]; then
     rm -f /etc/services.d/crond/down
     bash <(
         curl ${CURL_OPTIONS} ${PROFILE_URL1}/tracker.sh ||

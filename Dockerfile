@@ -16,10 +16,9 @@ FROM p3terx/s6-alpine
 ENV S6_BEHAVIOUR_IF_STAGE2_FAILS=1 \
     RCLONE_CONFIG=/config/rclone.conf
 
-RUN apk add --no-cache findutils dpkg && \
+RUN apk add --no-cache jq findutils dpkg && \
     curl -fsSL git.io/aria2c.sh | bash && \
     apk del --purge dpkg && \
-    mkdir -p /config /downloads && \
     rm -rf /var/cache/apk/* /tmp/*
 
 COPY rootfs /

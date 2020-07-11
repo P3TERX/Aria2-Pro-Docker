@@ -12,28 +12,24 @@
 # This is free software, licensed under the MIT License.
 # See /LICENSE for more information.
 
-cd /config
 . /etc/init-base
 
 INSTALL_RCLONE() {
-    echo
-    echo -e "${INFO} Installing RCLONE ..."
-    [[ -L /usr/bin/unzip ]] && rm -f /usr/bin/unzip
-    curl -fsSL https://rclone.org/install.sh | bash
-    [[ -f rclone/rclone.conf ]] && {
-        mv rclone/rclone.conf .
-        rm -rf rclone
-    }
+    if [[ ! -f /usr/local/bin/rclone ]]; then
+        echo
+        echo -e "${INFO} Installing RCLONE ..."
+        [[ -L /usr/bin/unzip ]] && rm -f /usr/bin/unzip
+        curl -fsSL https://rclone.org/install.sh | bash
+    fi
 }
 
-if [[ "$SPECIAL_MODE" = "rclone" ]]; then
-    [[ -e "autoupload.sh" ]] && mv -f autoupload.sh upload.sh
+if [[ "${SPECIAL_MODE}" = "rclone" ]]; then
     INSTALL_RCLONE
-    PROFILE_LIST="upload.sh"
-elif [[ "$SPECIAL_MODE" = "move" ]]; then
-    PROFILE_LIST="move.sh"
+    PROFILES="upload.sh rclone.env"
+elif [[ "${SPECIAL_MODE}" = "move" ]]; then
+    PROFILES="move.sh"
 else
-    PROFILE_LIST="clean.sh"
+    PROFILES="clean.sh"
 fi
 
 DOWNLOAD_PROFILE

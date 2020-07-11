@@ -12,7 +12,9 @@
 # This is free software, licensed under the MIT License.
 # See /LICENSE for more information.
 
-chown -R p3terx:p3terx /config
-chown -R p3terx:p3terx /downloads
-chmod 700 /config/*.sh
-chmod 600 /config/*.conf
+. /etc/init-base
+chown -R p3terx:p3terx ${DOWNLOAD_DIR}
+chown -R p3terx:p3terx ${ARIA2_CONF_DIR}
+chmod 600 ${ARIA2_CONF_DIR}/*
+chmod 755 ${SCRIPT_DIR}
+chmod 700 ${SCRIPT_DIR}/*
