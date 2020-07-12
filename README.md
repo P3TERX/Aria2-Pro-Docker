@@ -17,11 +17,14 @@ A perfect Aria2 Docker image.
 * Full Function: `Async DNS`, `BitTorrent`, `Firefox3 Cookie`, `GZip`, `HTTPS`, `Message Digest`, `Metalink`, `XML-RPC`, `SFTP`
 * `max-connection-per-server` unlimited.
 * retry on slow speed (`lowest-speed-limit`) and connection close
-* High BT download rate and speed.
-* Get BitTorrent tracker automatically.
-* Download error or cancel download automatically delete files to prevent disk space consumption.
-* Automatically clear `.aria2` suffix files.
-* No lost task progress, no repeated downloads.
+* High BT download rate and speed
+* Get BitTorrent tracker automatically
+* Download error automatically delete files
+* Download cancel automatically delete files
+* Automatically clear `.aria2` suffix files
+* Automatically clear `.torrent` suffix files
+* No lost task progress, no repeated downloads
+* And more powerful features
 
 ## Usage
 
@@ -58,20 +61,20 @@ docker run -d \
 
 ## Parameters
 
-| Parameter | Function |
-| --- | --- |
-| `-e PUID=$UID`<br>`-e PGID=$GID` | Bind UID and GID to the container, which means you can use a non-root user to manage downloaded files. |
-| `-e RPC_SECRET=<TOKEN>` | Set RPC secret authorization token. Ignoring it can be set in the configuration file. |
-| `-e TZ=Asia/Shanghai` | Specify a timezone to use e.g. `Asia/Shanghai` |
-| `-e RPC_PORT=6800` | Set up RPC listen port |
-| `-p 6800:6800` | bind RPC listen port |
-| `-e LISTEN_PORT=6888` | Set up listen port |
-| `-p 6888:6888` | Bind BT listen port (TCP) |
-| `-p 6888:6888/udp` | Bind DHT lisen port (UDP) |
-| `-v ~/aria2-config:/config` | Contains all relevant configuration files. |
-| `-v ~/downloads:/downloads` | Location of downloads on disk. |
-| `-e TRACKERS=no` | Disable BT tracker update, use this parameter if you need PT download. |
-| `-e DISK_CACHE=<SIZE>` | Set up disk cache. SIZE can include `K` or `M` (1K = 1024, 1M = 1024K), e.g `64M`. Ignoring it can be set in the configuration file. |
+| Parameter                        | Function                                                                                                                             |
+| -------------------------------- | ------------------------------------------------------------------------------------------------------------------------------------ |
+| `-e PUID=$UID`<br>`-e PGID=$GID` | Bind UID and GID to the container, which means you can use a non-root user to manage downloaded files.                               |
+| `-e RPC_SECRET=<TOKEN>`          | Set RPC secret authorization token. Ignoring it can be set in the configuration file.                                                |
+| `-e TZ=Asia/Shanghai`            | Specify a timezone to use e.g. `Asia/Shanghai`                                                                                       |
+| `-e RPC_PORT=6800`               | Set up RPC listen port                                                                                                               |
+| `-p 6800:6800`                   | bind RPC listen port                                                                                                                 |
+| `-e LISTEN_PORT=6888`            | Set up listen port                                                                                                                   |
+| `-p 6888:6888`                   | Bind BT listen port (TCP)                                                                                                            |
+| `-p 6888:6888/udp`               | Bind DHT lisen port (UDP)                                                                                                            |
+| `-v ~/aria2-config:/config`      | Contains all relevant configuration files.                                                                                           |
+| `-v ~/downloads:/downloads`      | Location of downloads on disk.                                                                                                       |
+| `-e UPDATE_TRACKERS=false`       | Disable BT tracker update, use this parameter if you need PT download.                                                               |
+| `-e DISK_CACHE=<SIZE>`           | Set up disk cache. SIZE can include `K` or `M` (1K = 1024, 1M = 1024K), e.g `64M`. Ignoring it can be set in the configuration file. |
 
 ## Advanced
 
