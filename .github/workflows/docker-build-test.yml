@@ -4,7 +4,7 @@
 #  / ___ \| |  | | (_| |/ __/  |  __/| | | (_) |
 # /_/   \_\_|  |_|\__,_|_____| |_|   |_|  \___/
 #
-# https://github.com/P3TERX/docker-aria2-pro
+# https://github.com/P3TERX/Docker-Aria2-Pro
 #
 # Copyright (c) 2020 P3TERX <https://p3terx.com>
 #
