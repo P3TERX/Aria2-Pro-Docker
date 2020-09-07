@@ -11,16 +11,14 @@
 # This is free software, licensed under the MIT License.
 # See /LICENSE for more information.
 
-name: Docker images publish
+name: Docker Images Publish
 
 on:
   workflow_dispatch:
   repository_dispatch:
-    types: [Manual*, Auto*]
 
 jobs:
   publish:
-    name: Publish
     runs-on: ubuntu-latest
     timeout-minutes: 10
 
@@ -28,38 +26,38 @@ jobs:
     - name: Checkout
       uses: actions/checkout@v2
 
-    - name: Install buildx
-      run: |
-        mkdir -vp ~/.docker/cli-plugins/
-        wget -nv -O- https://api.github.com/repos/docker/buildx/releases/latest \
-        | grep "browser_download_url.*linux-amd64\"" \
-        | cut -d '"' -f 4 \
-        | wget -nv -O ~/.docker/cli-plugins/docker-buildx -i-
-        chmod +x ~/.docker/cli-plugins/docker-buildx
-
-    - name: Set up buildx
-      run: |
-        docker run --rm --privileged multiarch/qemu-user-static --reset -p yes
-        docker buildx create --use --name multi-arch-builder
+    - name: Set up QEMU
+      id: qemu
+      uses: docker/setup-qemu-action@master
 
     - name: Available platforms
-      run: |
-        docker buildx inspect --bootstrap | grep Platforms
+      run: echo ${{ steps.qemu.outputs.platforms }}
 
-    - name: Login to Docker Hub
-      run: |
-        docker login -u ${{ secrets.DOCKER_USERNAME }} -p ${{ secrets.DOCKER_PASSWORD }}
+    - name: Set up Docker Buildx
+      id: buildx
+      uses: docker/setup-buildx-action@master
+
+    - name: Login to DockerHub
+      uses: docker/login-action@v1
+      with:
+        username: ${{ secrets.DOCKER_USERNAME }}
+        password: ${{ secrets.DOCKER_PASSWORD }}
+
+    - name: Login to GitHub Container Registry
+      uses: docker/login-action@v1
+      with:
+        registry: ghcr.io
+        username: ${{ github.repository_owner }}
+        password: ${{ secrets.CR_PAT }}
 
     - name: Build and push
-      env:
-        PLATFORMS: linux/amd64,linux/386,linux/arm64,linux/arm/v7,linux/arm/v6
-        IMAGE_NAME: p3terx/aria2-pro
-        IMAGE_TAG: latest
-        DOCKERFILE: Dockerfile
-        FILE_PATH: .
-      run: |
-        docker buildx build --push \
-          --platform ${PLATFORMS} \
-          -t ${IMAGE_NAME}:${IMAGE_TAG} \
-          -f ${DOCKERFILE} \
-          ${FILE_PATH}
+      uses: docker/build-push-action@v2
+      with:
+        builder: ${{ steps.buildx.outputs.name }}
+        platforms: linux/amd64,linux/386,linux/arm64,linux/arm/v7,linux/arm/v6
+        file: Dockerfile
+        context: .
+        push: true
+        tags: |
+          p3terx/aria2-pro
+          ghcr.io/p3terx/aria2-pro
