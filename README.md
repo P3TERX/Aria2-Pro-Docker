@@ -28,6 +28,8 @@ A perfect Aria2 Docker image.
 
 ## Usage
 
+### Docker CLI
+
 - No matter what architecture platform is used, just use the following command to start the container ( Just need to replace the `<TOKEN>` field ):
 ```
 docker run -d \
@@ -42,8 +44,8 @@ docker run -d \
     -e LISTEN_PORT=6888 \
     -p 6888:6888 \
     -p 6888:6888/udp \
-    -v ~/aria2-config:/config \
-    -v ~/downloads:/downloads \
+    -v $PWD/aria2-config:/config \
+    -v $PWD/downloads:/downloads \
     p3terx/aria2-pro
 ```
 
@@ -59,6 +61,23 @@ docker run -d \
 
 > **TIPS:** It is important for the firewall to open ports.
 
+### Docker Compose
+
+- Download [Compose file](https://github.com/P3TERX/Docker-Aria2-Pro/blob/master/docker-compose.yml)
+```
+wget git.io/aria2-pro.yml
+```
+
+- Edit Compose file
+```
+vim aria2-pro.yml
+```
+
+- Compose up
+```
+docker-compose -f aria2-pro.yml up -d
+```
+
 ## Parameters
 
 | Parameter                        | Function                                                                                                                             |
@@ -71,8 +90,8 @@ docker run -d \
 | `-e LISTEN_PORT=6888`            | Set up listen port                                                                                                                   |
 | `-p 6888:6888`                   | Bind BT listen port (TCP)                                                                                                            |
 | `-p 6888:6888/udp`               | Bind DHT lisen port (UDP)                                                                                                            |
-| `-v ~/aria2-config:/config`      | Contains all relevant configuration files.                                                                                           |
-| `-v ~/downloads:/downloads`      | Location of downloads on disk.                                                                                                       |
+| `-v $PWD/aria2-config:/config`   | Contains all relevant configuration files.                                                                                           |
+| `-v $PWD/downloads:/downloads`   | Location of downloads on disk.                                                                                                       |
 | `-e UPDATE_TRACKERS=false`       | Disable BT tracker update, use this parameter if you need PT download.                                                               |
 | `-e DISK_CACHE=<SIZE>`           | Set up disk cache. SIZE can include `K` or `M` (1K = 1024, 1M = 1024K), e.g `64M`. Ignoring it can be set in the configuration file. |
 
