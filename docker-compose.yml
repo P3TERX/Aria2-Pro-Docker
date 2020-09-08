@@ -5,7 +5,7 @@ services:
     image: p3terx/aria2-pro
     environment:
       - PUID=65534
-      - GUID=65534
+      - PGID=65534
       - RPC_SECRET=P3TERX
       - RPC_PORT=6800
       - LISTEN_PORT=6888
@@ -33,6 +33,7 @@ services:
   ariang:
     container_name: ariang
     image: p3terx/ariang
+    network_mode: bridge
     ports:
       - 6880:6880
     restart: unless-stopped
