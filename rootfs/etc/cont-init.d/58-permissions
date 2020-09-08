@@ -1,4 +1,4 @@
-#!/bin/sh
+#!/bin/bash
 #     _         _       ____    ____
 #    / \   _ __(_) __ _|___ \  |  _ \ _ __ ___
 #   / _ \ | '__| |/ _` | __) | | |_) | '__/ _ \
@@ -15,6 +15,7 @@
 . /etc/init-base
 chown -R p3terx:p3terx ${DOWNLOAD_DIR}
 chown -R p3terx:p3terx ${ARIA2_CONF_DIR}
+chmod u=rwx ${DOWNLOAD_DIR}
 chmod 600 ${ARIA2_CONF_DIR}/*
 chmod 755 ${SCRIPT_DIR}
 chmod 700 ${SCRIPT_DIR}/*
