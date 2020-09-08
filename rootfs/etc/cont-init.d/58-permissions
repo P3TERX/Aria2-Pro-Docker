@@ -1,4 +1,4 @@
-#!/bin/bash
+#!/usr/bin/with-contenv bash
 #     _         _       ____    ____
 #    / \   _ __(_) __ _|___ \  |  _ \ _ __ ___
 #   / _ \ | '__| |/ _` | __) | | |_) | '__/ _ \
@@ -15,7 +15,13 @@
 . /etc/init-base
 chown -R p3terx:p3terx ${DOWNLOAD_DIR}
 chown -R p3terx:p3terx ${ARIA2_CONF_DIR}
-chmod u=rwx ${DOWNLOAD_DIR}
-chmod 600 ${ARIA2_CONF_DIR}/*
-chmod 755 ${SCRIPT_DIR}
-chmod 700 ${SCRIPT_DIR}/*
+if [[ -z ${PUID} && -z ${PGID} ]] || [[ ${PUID} = 65534 && ${PGID} = 65534 ]]; then
+    echo -e "${WARN} Ignore permission settings."
+    chmod -v 777 ${DOWNLOAD_DIR}
+    chmod -vR 777 ${ARIA2_CONF_DIR}
+else
+    chmod -v u=rwx ${DOWNLOAD_DIR}
+    chmod -v 600 ${ARIA2_CONF_DIR}/*
+    chmod -v 755 ${SCRIPT_DIR}
+    chmod -v 700 ${SCRIPT_DIR}/*
+fi
