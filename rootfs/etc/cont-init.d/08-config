@@ -35,11 +35,9 @@ DOWNLOAD_PROFILE
 
 if ! [[ "${UPDATE_TRACKERS}" = "false" || "${UPDATE_TRACKERS}" = "disable" ]]; then
     rm -f /etc/services.d/crond/down
-    bash <(
-        curl ${CURL_OPTIONS} ${PROFILE_URL1}/tracker.sh ||
-            curl ${CURL_OPTIONS} ${PROFILE_URL2}/tracker.sh ||
-            curl ${CURL_OPTIONS} ${PROFILE_URL3}/tracker.sh
-    )
+    PROFILES="tracker.sh"
+    DOWNLOAD_PROFILE
+    bash ${SCRIPT_DIR}/tracker.sh ${ARIA2_CONF}
 fi
 
 exit 0
