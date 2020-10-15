@@ -41,3 +41,11 @@ services:
       driver: json-file
       options:
         max-size: 1m
+# telegram-bot setting
+  tele-aria2:
+    container_name: tele-aria2
+    image: p3terx/tele-aria2
+    network_mode: host
+    restart: unless-stopped
+    volumes:
+    ~/.tele-aria2-conf.json:/config.json
