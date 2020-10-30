@@ -12,4 +12,4 @@
 # See /LICENSE for more information.
 
 SHELL=/bin/bash
-0	7	*	*	*	bash /config/script/tracker.sh /config/aria2.conf RPC 2>&1 | tee /config/tracker.log
+0	7	*	*	*	sleep $((RANDOM % 1800)); bash /config/script/tracker.sh /config/aria2.conf RPC 2>&1 | tee /config/tracker.log
