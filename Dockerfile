@@ -13,12 +13,31 @@
 
 FROM p3terx/s6-alpine
 
-ENV S6_BEHAVIOUR_IF_STAGE2_FAILS=1 \
-    RCLONE_CONFIG=/config/rclone.conf
-
 RUN apk add --no-cache jq findutils dpkg && \
     curl -fsSL git.io/aria2c.sh | bash && \
     apk del --purge dpkg && \
     rm -rf /var/cache/apk/* /tmp/*
 
 COPY rootfs /
+
+ENV S6_BEHAVIOUR_IF_STAGE2_FAILS=1 \
+    RCLONE_CONFIG=/config/rclone.conf \
+    UPDATE_TRACKERS=true \
+    CUSTOM_TRACKER_URL= \
+    LISTEN_PORT=6888 \
+    RPC_PORT=6800 \
+    RPC_SECRET= \
+    PUID= PGID= \
+    DISK_CACHE= \
+    IPV6_MODE= \
+    UMASK_SET= \
+    SPECIAL_MODE=
+
+EXPOSE \
+    6800 \
+    6888 \
+    6888/udp
+
+VOLUME \
+    /config \
+    /downloads
