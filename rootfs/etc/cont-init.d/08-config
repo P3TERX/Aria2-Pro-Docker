@@ -38,6 +38,8 @@ if ! [[ "${UPDATE_TRACKERS}" = "false" || "${UPDATE_TRACKERS}" = "disable" ]]; t
     PROFILES="tracker.sh"
     DOWNLOAD_PROFILE
     bash ${SCRIPT_DIR}/tracker.sh ${ARIA2_CONF}
+else
+    touch /etc/services.d/crond/down
 fi
 
 exit 0
