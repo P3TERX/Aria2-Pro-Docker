@@ -1,3 +1,5 @@
+**English** | [中文](https://p3terx.com/archives/docker-aria2-pro.html)
+
 # Aria2 Pro
 
 [![LICENSE](https://img.shields.io/github/license/P3TERX/docker-aria2-pro?style=flat-square&label=LICENSE)](https://github.com/P3TERX/docker-aria2-pro/blob/master/LICENSE)
@@ -8,8 +10,6 @@
 ![GitHub Workflow Status](https://img.shields.io/github/workflow/status/P3TERX/docker-aria2-pro/Docker%20images%20build%20test?label=Actions&logo=github&style=flat-square)
 
 A perfect Aria2 Docker image.
-
-[Read the details in my blog (in Chinese) | 中文教程](https://p3terx.com/archives/docker-aria2-pro.html)
 
 ## Features
 
@@ -38,6 +38,7 @@ docker run -d \
     --log-opt max-size=1m \
     -e PUID=$UID \
     -e PGID=$GID \
+    -e UMASK_SET=022 \
     -e RPC_SECRET=<TOKEN> \
     -e RPC_PORT=6800 \
     -p 6800:6800 \
@@ -45,7 +46,7 @@ docker run -d \
     -p 6888:6888 \
     -p 6888:6888/udp \
     -v $PWD/aria2-config:/config \
-    -v $PWD/downloads:/downloads \
+    -v $PWD/aria2-downloads:/downloads \
     p3terx/aria2-pro
 ```
 
@@ -78,22 +79,30 @@ vim aria2-pro.yml
 docker-compose -f aria2-pro.yml up -d
 ```
 
+### Other
+
+- [Docker templates for UNRAID](https://github.com/P3TERX/unraid-docker-templates)
+- [Docker Tutorial for Synology DSM (Chinese)](https://p3terx.com/archives/synology-nas-docker-advanced-tutorial-deploy-aria2-pro.html)
+
 ## Parameters
 
-| Parameter                        | Function                                                                                                                             |
-| -------------------------------- | ------------------------------------------------------------------------------------------------------------------------------------ |
-| `-e PUID=$UID`<br>`-e PGID=$GID` | Bind UID and GID to the container, which means you can use a non-root user to manage downloaded files.                               |
-| `-e RPC_SECRET=<TOKEN>`          | Set RPC secret authorization token. Ignoring it can be set in the configuration file.                                                |
-| `-e TZ=Asia/Shanghai`            | Specify a timezone to use e.g. `Asia/Shanghai`                                                                                       |
-| `-e RPC_PORT=6800`               | Set up RPC listen port                                                                                                               |
-| `-p 6800:6800`                   | bind RPC listen port                                                                                                                 |
-| `-e LISTEN_PORT=6888`            | Set up listen port                                                                                                                   |
-| `-p 6888:6888`                   | Bind BT listen port (TCP)                                                                                                            |
-| `-p 6888:6888/udp`               | Bind DHT lisen port (UDP)                                                                                                            |
-| `-v $PWD/aria2-config:/config`   | Contains all relevant configuration files.                                                                                           |
-| `-v $PWD/downloads:/downloads`   | Location of downloads on disk.                                                                                                       |
-| `-e UPDATE_TRACKERS=false`       | Disable BT tracker update, use this parameter if you need PT download.                                                               |
-| `-e DISK_CACHE=<SIZE>`           | Set up disk cache. SIZE can include `K` or `M` (1K = 1024, 1M = 1024K), e.g `64M`. Ignoring it can be set in the configuration file. |
+| Parameter                        | Function                                                                                                                                                                  |
+| -------------------------------- | ------------------------------------------------------------------------------------------------------------------------------------------------------------------------- |
+| `-e PUID=$UID`<br>`-e PGID=$GID` | Bind UID and GID to the container, which means you can use a non-root user to manage downloaded files.                                                                    |
+| `-e UMASK_SET=022`               | For umask setting of Aria2, optional , default if left unset is `022`                                                                                                     |
+| `-e RPC_SECRET=<TOKEN>`          | Set RPC secret authorization token. Default: `P3TERX`                                                                                                                     |
+| `-e RPC_PORT=6800`               | Set RPC listen port.                                                                                                                                                      |
+| `-p 6800:6800`                   | bind RPC listen port.                                                                                                                                                     |
+| `-e LISTEN_PORT=6888`            | Set TCP/UDP port number for BitTorrent/DHT listen.                                                                                                                        |
+| `-p 6888:6888`                   | Bind BT listen port (TCP).                                                                                                                                                |
+| `-p 6888:6888/udp`               | Bind DHT lisen port (UDP).                                                                                                                                                |
+| `-v <PATH>:/config`              | Contains all relevant configuration files.                                                                                                                                |
+| `-v <PATH>:/downloads`           | Location of downloads on disk.                                                                                                                                            |
+| `-e DISK_CACHE=<SIZE>`           | Set up disk cache. SIZE can include `K` or `M` (1K = 1024, 1M = 1024K), e.g `64M`.                                                                                        |
+| `-e IPV6_MODE=<BOOLEAN>`         | Whether to enable IPv6 support for Aria2. Optional: `true` or `false`. Set the options `disable-ipv6=false` and `enable-dht6=true` in the configuration file(aria2.conf). |
+| `-e UPDATE_TRACKERS=<BOOLEAN>`   | Whether to update BT Trackers List automatically. Optional: `true` or `flase`, default if left unset is `true`                                                            |
+| `-e CUSTOM_TRACKER_URL=<URL>`    | Custom BT Trackers List URL. If not set, it will be get from https://trackerslist.com/all_aria2.txt.                                                                      |
+| `-e TZ=Asia/Shanghai`            | Specify a timezone to use e.g. `Asia/Shanghai`                                                                                                                            |
 
 ## Advanced
 
