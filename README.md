@@ -1,15 +1,15 @@
-**English** | [中文](https://p3terx.com/archives/docker-aria2-pro.html)
+**English** | [中文](https://p3terx.com/archives/Aria2-Pro-Docker.html)
 
-# Aria2 Pro
+# Aria2 Pro Docker
 
-[![LICENSE](https://img.shields.io/github/license/P3TERX/docker-aria2-pro?style=flat-square&label=LICENSE)](https://github.com/P3TERX/docker-aria2-pro/blob/master/LICENSE)
-[![GitHub Stars](https://img.shields.io/github/stars/P3TERX/docker-aria2-pro.svg?style=flat-square&label=Stars&logo=github)](https://github.com/P3TERX/docker-aria2-pro/stargazers)
-[![GitHub forks](https://img.shields.io/github/forks/P3TERX/docker-aria2-pro.svg?style=flat-square&label=Forks&logo=github)](https://github.com/P3TERX/docker-aria2-pro/fork)
+[![LICENSE](https://img.shields.io/github/license/P3TERX/Aria2-Pro-Docker?style=flat-square&label=LICENSE)](https://github.com/P3TERX/Aria2-Pro-Docker/blob/master/LICENSE)
+[![GitHub Stars](https://img.shields.io/github/stars/P3TERX/Aria2-Pro-Docker.svg?style=flat-square&label=Stars&logo=github)](https://github.com/P3TERX/Aria2-Pro-Docker/stargazers)
+[![GitHub forks](https://img.shields.io/github/forks/P3TERX/Aria2-Pro-Docker.svg?style=flat-square&label=Forks&logo=github)](https://github.com/P3TERX/Aria2-Pro-Docker/fork)
 [![Docker Stars](https://img.shields.io/docker/stars/p3terx/aria2-pro.svg?style=flat-square&label=Stars&logo=docker)](https://hub.docker.com/r/p3terx/aria2-pro)
 [![Docker Pulls](https://img.shields.io/docker/pulls/p3terx/aria2-pro.svg?style=flat-square&label=Pulls&logo=docker&color=orange)](https://hub.docker.com/r/p3terx/aria2-pro)
-![GitHub Workflow Status](https://img.shields.io/github/workflow/status/P3TERX/docker-aria2-pro/Docker%20images%20build%20test?label=Actions&logo=github&style=flat-square)
+![GitHub Workflow Status](https://img.shields.io/github/workflow/status/P3TERX/Aria2-Pro-Docker/Docker%20images%20build%20test?label=Actions&logo=github&style=flat-square)
 
-A perfect Aria2 Docker image.
+A perfect Aria2 Docker image. Out of the box, just add download tasks and don't need to think about anything else.
 
 ## Features
 
@@ -64,7 +64,7 @@ docker run -d \
 
 ### Docker Compose
 
-- Download [Compose file](https://github.com/P3TERX/Docker-Aria2-Pro/blob/master/docker-compose.yml)
+- Download [Compose file](https://github.com/P3TERX/Aria2-Pro-Docker/blob/master/docker-compose.yml)
 ```
 wget git.io/aria2-pro.yml
 ```
@@ -112,10 +112,10 @@ I am working hard on my English, so this part may be explained in detail later. 
 
 * [aria2](https://github.com/aria2/aria2)
 * [P3TERX/aria2.conf](https://github.com/P3TERX/aria2.conf)
-* [P3TERX/aria2-builder](https://github.com/P3TERX/aria2-builder)
+* [P3TERX/Aria2-Pro-Core](https://github.com/P3TERX/Aria2-Pro-Core)
 * [just-containers/s6-overlay](https://github.com/just-containers/s6-overlay)
 * [XIU2/TrackersListCollection](https://github.com/XIU2/TrackersListCollection)
 
 ## License
 
-[MIT](https://github.com/P3TERX/docker-aria2-pro/blob/master/LICENSE) © P3TERX
+[MIT](https://github.com/P3TERX/Aria2-Pro-Docker/blob/master/LICENSE) © P3TERX
