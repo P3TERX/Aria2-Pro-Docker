@@ -1,4 +1,4 @@
-**English** | [中文](https://p3terx.com/archives/Aria2-Pro-Docker.html)
+**English** | [中文](https://p3terx.com/archives/docker-aria2-pro.html)
 
 # Aria2 Pro Docker
 
