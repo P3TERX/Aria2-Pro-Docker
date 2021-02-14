@@ -1,6 +1,8 @@
 version: "3.8"
+
 services:
-  aria2-pro:
+
+  Aria2-Pro:
     container_name: aria2-pro
     image: p3terx/aria2-pro
     environment:
@@ -19,8 +21,9 @@ services:
       - ${PWD}/aria2-config:/config
       - ${PWD}/aria2-downloads:/downloads
 # If you use host network mode, then no port mapping is required.
-# This is your best choice when using IPv6.
+# This is the easiest way to use IPv6 networks.
     network_mode: host
+#    network_mode: bridge
 #    ports:
 #      - 6800:6800
 #      - 6888:6888
@@ -31,13 +34,16 @@ services:
       driver: json-file
       options:
         max-size: 1m
+
 # AriaNg is just a static web page, usually you only need to deploy on a single host.
-  ariang:
+  AriaNg:
     container_name: ariang
     image: p3terx/ariang
-    network_mode: bridge
-    ports:
-      - 6880:6880
+    command: --port 6880 --ipv6
+    network_mode: host
+#    network_mode: bridge
+#    ports:
+#      - 6880:6880
     restart: unless-stopped
     logging:
       driver: json-file
