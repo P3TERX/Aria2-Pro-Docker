@@ -61,7 +61,7 @@ jobs:
         context: .
         push: true
         tags: |
-          p3terx/aria2-pro
-          ghcr.io/p3terx/aria2-pro
-          p3terx/aria2-pro:${{ steps.getVersion.outputs.time }}
-          ghcr.io/p3terx/aria2-pro:${{ steps.getVersion.outputs.time }}
+          ${{ secrets.DOCKER_USERNAME }}/aria2-pro
+          ghcr.io/${{ secrets.DOCKER_USERNAME }}/aria2-pro
+          ${{ secrets.DOCKER_USERNAME }}/aria2-pro:${{ steps.getVersion.outputs.time }}
+          ghcr.io/${{ secrets.DOCKER_USERNAME }}/aria2-pro:${{ steps.getVersion.outputs.time }}

@@ -39,7 +39,7 @@ services:
 # AriaNg is just a static web page, usually you only need to deploy on a single host.
   AriaNg:
     container_name: ariang
-    image: p3terx/ariang
+    image: hereisderek/ariang
     command: --port 6880 --ipv6
     network_mode: host
 #    network_mode: bridge
