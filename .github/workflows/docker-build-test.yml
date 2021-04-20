@@ -65,5 +65,5 @@ jobs:
         context: .
         push: true
         tags: |
-          ${{ secrets.DOCKER_USERNAME }}/aria2-pro:test
-          ghcr.io/${{ secrets.DOCKER_USERNAME }}/aria2-pro:test
+          p3terx/aria2-pro:test
+          ghcr.io/p3terx/aria2-pro:test
