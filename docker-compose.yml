@@ -17,6 +17,7 @@ services:
       - UPDATE_TRACKERS=true
       - CUSTOM_TRACKER_URL=
       - TZ=Asia/Shanghai
+      - CUSTOM_PROFILE_URL=https://raw.githubusercontent.com/hereisderek/aria2.conf/master/
     volumes:
       - ${PWD}/aria2-config:/config
       - ${PWD}/aria2-downloads:/downloads

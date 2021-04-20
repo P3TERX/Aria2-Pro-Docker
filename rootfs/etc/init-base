@@ -71,9 +71,21 @@ DOWNLOAD_PROFILE() {
             rm -rf ${PROFILE}
             echo
             echo -e "${INFO} Downloading '${PROFILE}' ..."
-            curl -O ${CURL_OPTIONS} ${PROFILE_URL1}/${PROFILE} ||
-                curl -O ${CURL_OPTIONS} ${PROFILE_URL2}/${PROFILE} ||
-                curl -O ${CURL_OPTIONS} ${PROFILE_URL3}/${PROFILE}
+
+
+            [[ -n ${CUSTOM_PROFILE_URL} ]] && {
+                echo "CUSTOM_PROFILE_URL presents, download ${PROFILE} from ${CUSTOM_PROFILE_URL}"
+                curl -O ${CURL_OPTIONS} ${CUSTOM_PROFILE_URL}/${PROFILE} || {
+                    echo -e "unable to download profile:${PROFILE} from ${CUSTOM_PROFILE_URL}/${PROFILE}, exiting..."
+                    exit 1
+                }
+            } || {
+                curl -O ${CURL_OPTIONS} ${PROFILE_URL1}/${PROFILE} ||
+                    curl -O ${CURL_OPTIONS} ${PROFILE_URL2}/${PROFILE} ||
+                    curl -O ${CURL_OPTIONS} ${PROFILE_URL3}/${PROFILE}
+            }
+
+            
             [[ -s ${PROFILE} ]] && {
                 [[ "${PROFILE}" = "aria2.conf" ]] && CONVERSION_ARIA2_CONF
                 [[ "${PROFILE}" = "script.conf" ]] && CONVERSION_SCRIPT_CONF
