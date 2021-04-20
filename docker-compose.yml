@@ -4,7 +4,7 @@ services:
 
   Aria2-Pro:
     container_name: aria2-pro
-    image: p3terx/aria2-pro
+    image: hereisderek/aria2-pro
     environment:
       - PUID=65534
       - PGID=65534
