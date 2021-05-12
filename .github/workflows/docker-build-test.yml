@@ -58,7 +58,7 @@ jobs:
         cat rootfs/Aria2-Pro
 
     - name: Build and push
-      uses: docker/build-push-action@v2
+      uses: docker/build-push-action@v2.4.0
       with:
         platforms: linux/amd64,linux/386,linux/arm64,linux/arm/v7,linux/arm/v6
         file: Dockerfile
