@@ -10,7 +10,7 @@ services:
       - PGID=65534
       - UMASK_SET=022
       - RPC_SECRET=P3TERX
-      - RPC_PORT=6800
+      - RPC_PORT=6880
       - LISTEN_PORT=6888
       - DISK_CACHE=64M
       - IPV6_MODE=false
