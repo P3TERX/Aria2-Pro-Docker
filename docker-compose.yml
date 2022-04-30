@@ -6,8 +6,8 @@ services:
     container_name: aria2-pro
     image: p3terx/aria2-pro
     environment:
-      - PUID=65534
-      - PGID=65534
+      - PUID=${UID}
+      - PGID=${GID}
       - UMASK_SET=022
       - RPC_SECRET=P3TERX
       - RPC_PORT=6800
