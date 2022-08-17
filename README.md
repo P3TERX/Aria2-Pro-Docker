@@ -119,3 +119,8 @@ I am working hard on my English, so this part may be explained in detail later. 
 ## License
 
 [MIT](https://github.com/P3TERX/Aria2-Pro-Docker/blob/master/LICENSE) © P3TERX
+
+
+### Infrastructure model
+
+![Infrastructure model](.infragenie/infrastructure_model.png)
