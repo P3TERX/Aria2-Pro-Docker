@@ -20,7 +20,7 @@ if [[ -z ${PUID} && -z ${PGID} ]] || [[ ${PUID} = 65534 && ${PGID} = 65534 ]]; t
     chmod -v 777 ${DOWNLOAD_DIR}
     chmod -vR 777 ${ARIA2_CONF_DIR}
 else
-    chmod -v u=rwx ${DOWNLOAD_DIR}
+    if [ -w ${DOWNLOAD_DIR} ]; then echo "Download DIR writeable, not modifying permission."; else chmod -v u=rwx ${DOWNLOAD_DIR}; fi
     chmod -v 600 ${ARIA2_CONF_DIR}/*
     chmod -v 755 ${SCRIPT_DIR}
     chmod -v 700 ${SCRIPT_DIR}/*
