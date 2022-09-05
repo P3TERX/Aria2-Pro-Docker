@@ -6,8 +6,8 @@ services:
     container_name: aria2-pro
     image: p3terx/aria2-pro
     environment:
-      - PUID=65534
-      - PGID=65534
+      - PUID=1028
+      - PGID=100
       - UMASK_SET=022
       - RPC_SECRET=P3TERX
       - RPC_PORT=6800
@@ -16,13 +16,13 @@ services:
       - IPV6_MODE=false
       - UPDATE_TRACKERS=true
       - CUSTOM_TRACKER_URL=
-      - TZ=Asia/Shanghai
+      - TZ=UTC
     volumes:
       - ${PWD}/aria2-config:/config
       - ${PWD}/aria2-downloads:/downloads
 # If you use host network mode, then no port mapping is required.
 # This is the easiest way to use IPv6 networks.
-    network_mode: host
+#    network_mode: host
 #    network_mode: bridge
 #    ports:
 #      - 6800:6800
