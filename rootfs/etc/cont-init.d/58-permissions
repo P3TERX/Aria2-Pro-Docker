@@ -13,7 +13,7 @@
 # See /LICENSE for more information.
 
 . /etc/init-base
-chown -R p3terx:p3terx ${DOWNLOAD_DIR}
+if [ -w ${DOWNLOAD_DIR} ]; then echo "Download DIR writeable, not changing owner."; else chown -R p3terx:p3terx ${DOWNLOAD_DIR}; fi
 chown -R p3terx:p3terx ${ARIA2_CONF_DIR}
 if [[ -z ${PUID} && -z ${PGID} ]] || [[ ${PUID} = 65534 && ${PGID} = 65534 ]]; then
     echo -e "${WARN} Ignore permission settings."
