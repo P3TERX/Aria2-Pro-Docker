@@ -10,7 +10,7 @@ services:
       - PGID=65534
       - UMASK_SET=022
       - RPC_SECRET=P3TERX
-      - RPC_PORT=6800
+      - RPC_PORT=80
       - LISTEN_PORT=6888
       - DISK_CACHE=64M
       - IPV6_MODE=false
@@ -25,7 +25,7 @@ services:
     network_mode: host
 #    network_mode: bridge
 #    ports:
-#      - 6800:6800
+#      - 80:80
 #      - 6888:6888
 #      - 6888:6888/udp
     restart: unless-stopped
@@ -39,7 +39,7 @@ services:
   AriaNg:
     container_name: ariang
     image: p3terx/ariang
-    command: --port 6880 --ipv6
+    command: --port 80 --ipv6
     network_mode: host
 #    network_mode: bridge
 #    ports:
